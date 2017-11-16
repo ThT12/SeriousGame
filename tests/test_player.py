@@ -1,3 +1,5 @@
+import pytest
+
 from seriousgame.player import Player
 
 player = Player()
@@ -28,8 +30,5 @@ def test_use_influence_with_error():
     current_influence = 2
     influence_to_use = 5
     player.influence = current_influence
-    try:
+    with pytest.raises(KeyError):
         player.use_influence(influence_to_use)
-        assert False
-    except KeyError:
-        pass

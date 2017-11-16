@@ -65,7 +65,7 @@ class Country:
         """ Verifies if the country match the loosing condition
         
         Returns:
-            (bool): True if the country match the loosing condition
+            (bool): True if the country match one loosing condition
         """
         return self.economy == 0 or self.ecology == 0 or self.social == 0
 

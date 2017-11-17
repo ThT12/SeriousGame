@@ -1,6 +1,6 @@
 
 
-class Country:
+class Country(object):
     INITIAL_REDUCTION = 0.01
 
     def __init__(self, name='France', init_ecology=0.5, init_social=0.5, init_economy=0.5):

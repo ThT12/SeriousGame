@@ -2,7 +2,7 @@ from seriousgame.country import Country
 from seriousgame.player import Player
 
 
-class Game:
+class Game(object):
 
     def __init__(self, player=Player(), country=Country()):
         """ Constructor

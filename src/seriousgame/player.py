@@ -1,6 +1,6 @@
 
 
-class Player:
+class Player(object):
     INITIAL_INFLUENCE_BY_TURN = 1
 
     def __init__(self, name='Player', influence=0):

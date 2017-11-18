@@ -1,11 +1,12 @@
 from seriousgame.country import Country
 from seriousgame.player import Player
 from seriousgame.improvements import Improvements
+from seriousgame.io import outputs
 
 
 class Game(object):
 
-    def __init__(self, player=Player(), country=Country(), improvements=None):
+    def __init__(self, player=Player(), country=Country(), improvements=Improvements()):
         """ Constructor
 
         Args:
@@ -20,6 +21,8 @@ class Game(object):
     def new_turn(self):
         """ Makes a new turn in the game"""
         self.player.new_turn()
+        outputs.display_influence_available(self.player)
+        outputs.display_improvements(self.improvements.get_improvements_available(), self.player.influence)
         self.country.new_turn()
 
     def play(self):

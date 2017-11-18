@@ -23,7 +23,7 @@ class Player(object):
         Args:
             amount (int): Amount of influence the player want to use
         """
-        if amount < self.influence:
+        if amount <= self.influence:
             self.influence -= amount
         else:
             raise KeyError('You cannot use more influence that you have')

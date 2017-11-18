@@ -42,6 +42,12 @@ class Improvement(object):
             return other.title == self.title
         raise KeyError('An Improvement can only be compared to a str or an other Improvement')
 
+    def develop(self):
+        """ if the status is False, set it to True. Return an error otherwise"""
+        if self.status:
+            raise KeyError('You cannot develop an improvement already done')
+        self.status = True
+
 
 class Improvements(object):
 

@@ -31,8 +31,11 @@ def display_improvements(improvements, influence_available=None):
         improvements (list): list of improvement
         influence_available (int): influence available to compare with to set the influence_cost color
     """
-    for improvement in improvements:
-        display_improvement(improvement, influence_available, suffix='* ')
+    if len(improvements) == 0:
+        print('No improvement available.')
+    else:
+        for improvement in improvements:
+            display_improvement(improvement, influence_available, suffix='* ')
 
 
 def display_influence_available(player):

@@ -19,7 +19,7 @@ def test_two_new_turn():
 
 
 def test_use_influence_without_error():
-    current_influence = 5
+    current_influence = 2
     influence_to_use = 2
     player.influence = current_influence
     player.use_influence(influence_to_use)
@@ -28,7 +28,7 @@ def test_use_influence_without_error():
 
 def test_use_influence_with_error():
     current_influence = 2
-    influence_to_use = 5
+    influence_to_use = 3
     player.influence = current_influence
     with pytest.raises(KeyError):
         player.use_influence(influence_to_use)

@@ -41,11 +41,20 @@ def test_display_improvement_no_color(mocker):
     assert output.find('\033') == -1
 
 
-def test_display_improvements(mocker):
+def test_display_improvements_with_improvement(mocker):
     mocker.patch('sys.stdout', new_callable=StringIO)
     mocker.spy(outputs, 'display_improvement')
     outputs.display_improvements(list_improvements, 5)
     assert outputs.display_improvement.call_count == len(list_improvements)
+
+
+def test_display_improvements_without_improvement(mocker):
+    mocker.patch('sys.stdout', new_callable=StringIO)
+    mocker.spy(outputs, 'display_improvement')
+    outputs.display_improvements([], 5)
+    assert outputs.display_improvement.call_count == 0
+    output = sys.stdout.getvalue()
+    assert output.find('No improvement available') != -1
 
 
 player = Player(influence=5)

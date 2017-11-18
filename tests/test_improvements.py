@@ -15,6 +15,18 @@ def test_improvement_comparator():
         improvement_one.__eq__(2)
 
 
+def test_develop_improvement_already_done():
+    improvement = Improvement(status=True)
+    with pytest.raises(KeyError):
+        improvement.develop()
+
+
+def test_develop_improvement_ok():
+    improvement = Improvement(status=False)
+    improvement.develop()
+    assert improvement.status
+
+
 improvement_done = Improvement(title='Done', effects={'Influence': 1}, status=True)
 another_improvement_done = Improvement(title='Another done', effects={'Influence': 4, 'Ecology': -0.01},
                                        requirements=(improvement_done,), status=True)

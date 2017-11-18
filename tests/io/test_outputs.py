@@ -3,6 +3,7 @@ import sys
 
 from seriousgame.improvements import Improvement
 from seriousgame.io import outputs
+from seriousgame.player import Player
 
 
 improvement_green = Improvement(title='My First improvement', influence_cost=1, description='My First description')
@@ -45,3 +46,12 @@ def test_display_improvements(mocker):
     mocker.spy(outputs, 'display_improvement')
     outputs.display_improvements(list_improvements, 5)
     assert outputs.display_improvement.call_count == len(list_improvements)
+
+
+player = Player(influence=5)
+
+
+def test_display_influence_available(mocker):
+    mocker.patch('sys.stdout', new_callable=StringIO)
+    outputs.display_influence_available(player)
+    assert sys.stdout.getvalue().find('5') != -1

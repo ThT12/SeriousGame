@@ -2,6 +2,7 @@ from seriousgame.country import Country
 from seriousgame.player import Player
 from seriousgame.improvements import Improvements
 from seriousgame.io import outputs
+from seriousgame.io import inputs
 
 
 class Game(object):
@@ -23,6 +24,7 @@ class Game(object):
         self.player.new_turn()
         outputs.display_influence_available(self.player)
         outputs.display_improvements(self.improvements.get_improvements_available(), self.player.influence)
+        inputs.ask_improvements_to_make(self.improvements.get_improvements_available())
         self.country.new_turn()
 
     def play(self):

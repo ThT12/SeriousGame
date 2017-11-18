@@ -26,6 +26,22 @@ class Improvement(object):
         self.status = status
         self.description = description
 
+    def __eq__(self, other):
+        """ Compare if two Improvement are equal to each other.
+
+        Args:
+            other (object): object to be compared with. Return an error if other is not a str or a Improvement
+
+        Returns:
+            (bool): return True if other is an Improvement and other.title = self.title or if other is a str and
+                other = self.title
+        """
+        if isinstance(other, str):
+            return other == self.title
+        if isinstance(other, Improvement):
+            return other.title == self.title
+        raise KeyError('An Improvement can only be compared to a str or an other Improvement')
+
 
 class Improvements(object):
 

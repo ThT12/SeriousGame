@@ -2,6 +2,7 @@ from seriousgame.game import Game
 from seriousgame.player import Player
 from seriousgame.country import Country
 from seriousgame.io import outputs
+from seriousgame.io import inputs
 
 
 game = Game()
@@ -12,6 +13,7 @@ def test_new_turn(mocker):
     mocker.spy(Country, 'new_turn')
     mocker.patch.object(outputs, 'display_influence_available', return_value=None)
     mocker.patch.object(outputs, 'display_improvements', return_value=None)
+    mocker.patch.object(inputs, 'ask_improvements_to_make', return_value=None)
     game.new_turn()
     assert Player.new_turn.call_count == 1
     assert Country.new_turn.call_count == 1

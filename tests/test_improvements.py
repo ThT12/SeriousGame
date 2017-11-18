@@ -3,14 +3,27 @@ import pytest
 from seriousgame.improvements import Improvement, Improvements
 
 
-improvement_done = Improvement(effects={'Influence': 1}, status=True)
-another_improvement_done = Improvement(effects={'Influence': 4, 'Ecology': -0.01}, requirements=(improvement_done,),
-                                       status=True)
-improvement_available = Improvement(requirements=(improvement_done,), status=False)
-improvement_not_available = Improvement(requirements=(improvement_done, improvement_available), status=False)
-improvement_not_in_improvements = Improvement()
-improvement_with_requirement_not_in_improvements = Improvement(
-    requirements=(improvement_done, improvement_not_in_improvements))
+def test_improvement_comparator():
+    improvement_one = Improvement(title='One')
+    improvement_one_bis = Improvement(title='One')
+    improvement_two = Improvement(title='Two')
+    assert improvement_one == 'One'
+    assert improvement_one == improvement_one_bis
+    assert improvement_one != 'Two'
+    assert improvement_one != improvement_two
+    with pytest.raises(KeyError):
+        improvement_one.__eq__(2)
+
+
+improvement_done = Improvement(title='Done', effects={'Influence': 1}, status=True)
+another_improvement_done = Improvement(title='Another done', effects={'Influence': 4, 'Ecology': -0.01},
+                                       requirements=(improvement_done,), status=True)
+improvement_available = Improvement(title='Available', requirements=(improvement_done,), status=False)
+improvement_not_available = Improvement(title='Not available', requirements=(improvement_done, improvement_available),
+                                        status=False)
+improvement_not_in_improvements = Improvement(title='Not in improvements')
+improvement_with_requirement_not_in_improvements = Improvement(title='Requirement not in improvements', requirements=(
+    improvement_done, improvement_not_in_improvements))
 
 improvements = Improvements(improvement_done, another_improvement_done, improvement_available, improvement_not_available)
 

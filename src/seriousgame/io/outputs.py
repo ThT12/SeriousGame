@@ -19,8 +19,9 @@ def display_improvement(improvement, influence_available=None, suffix=''):
     else:
         color = ''
         end_color = ''
+    str_effects = str(improvement.effects)
     string_to_print = ''.join([suffix, improvement.title, ': Cost=', color, str(improvement.influence_cost), end_color,
-                               ' ; Description=', improvement.description])
+                               ' ; Description=', improvement.description, ' ; Effects=', str_effects])
     print(string_to_print)
 
 

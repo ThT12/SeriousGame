@@ -2,7 +2,8 @@
 
 class Improvement(object):
 
-    def __init__(self, title='My improvement', influence_cost=1, effects=None, requirements=None, status=False):
+    def __init__(self, title='My improvement', influence_cost=1, effects=None, requirements=None, status=False,
+                 description='Detail of this improvement'):
         """ Constructor
 
         Args:
@@ -12,9 +13,10 @@ class Improvement(object):
             requirements (:type: tuple of Improvement): tuple of Improvements that have to been done to have this one
                 available
             status (bool): True if this improvement have been done
+            description (str): Detail of this improvement
         """
         if not effects:
-            effects = {'Influence': 1}
+            effects = {}
         if not requirements:
             requirements = ()
         self.title = title
@@ -22,6 +24,7 @@ class Improvement(object):
         self.effects = effects
         self.requirements = requirements
         self.status = status
+        self.description = description
 
 
 class Improvements(object):
@@ -68,3 +71,18 @@ class Improvements(object):
         """
         return [improvement for improvement in self.improvements if
                 not improvement.status and self.are_improvement_requirements_reached(improvement)]
+
+    def get_current_effects(self):
+        """
+        Returns:
+            (dict): return all effects currently applied. If two improvement have the same type of effects then their
+                values are summed
+        """
+        effects = {}
+        for improvement in self.get_improvements_done():
+            for key in improvement.effects.keys():
+                if key in effects:
+                    effects[key] += improvement.effects[key]
+                else:
+                    effects.update({key: improvement.effects[key]})
+        return effects

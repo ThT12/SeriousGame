@@ -3,14 +3,16 @@ import pytest
 from seriousgame.improvements import Improvement, Improvements
 
 
-improvement_done = Improvement(status=True)
+improvement_done = Improvement(effects={'Influence': 1}, status=True)
+another_improvement_done = Improvement(effects={'Influence': 4, 'Ecology': -0.01}, requirements=(improvement_done,),
+                                       status=True)
 improvement_available = Improvement(requirements=(improvement_done,), status=False)
 improvement_not_available = Improvement(requirements=(improvement_done, improvement_available), status=False)
 improvement_not_in_improvements = Improvement()
 improvement_with_requirement_not_in_improvements = Improvement(
     requirements=(improvement_done, improvement_not_in_improvements))
 
-improvements = Improvements(improvement_done, improvement_available, improvement_not_available)
+improvements = Improvements(improvement_done, another_improvement_done, improvement_available, improvement_not_available)
 
 
 def test_constructor_return_error_if_requirement_not_on_improvements():
@@ -32,8 +34,12 @@ def test_are_requirements_reached_when_there_are_not():
 
 
 def test_get_improvements_done():
-    assert improvements.get_improvements_done() == [improvement_done]
+    assert improvements.get_improvements_done() == [improvement_done, another_improvement_done]
 
 
 def test_get_improvements_available():
     assert improvements.get_improvements_available() == [improvement_available]
+
+
+def test_get_current_effects():
+    assert improvements.get_current_effects() == {'Influence': 5, 'Ecology': -0.01}

@@ -13,9 +13,16 @@ class Player(object):
         self.name = name
         self.influence = influence
 
-    def new_turn(self):
-        """ make a player moved to the next turn"""
-        self.influence += Player.INITIAL_INFLUENCE_BY_TURN
+    def new_turn(self, effects=None):
+        """ make a player moved to the next turn
+
+        Args:
+            effects (dict): list of effect that are currently applied. Only the Key Influence is used.
+        """
+        bonus = 0
+        if effects is not None and 'Influence' in effects.keys():
+            bonus = effects['Influence']
+        self.influence += Player.INITIAL_INFLUENCE_BY_TURN + bonus
 
     def use_influence(self, amount):
         """ make a player use is influence. Return an error if a player use more influence than he has.

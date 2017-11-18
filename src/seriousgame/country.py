@@ -47,11 +47,25 @@ class Country(object):
         verify_level_value(value)
         self.economy = value
 
-    def new_turn(self):
-        """ make a country moved to the next turn"""
-        self.set_ecology(max(self.ecology - Country.INITIAL_REDUCTION, 0))
-        self.set_economy(max(self.economy - Country.INITIAL_REDUCTION, 0))
-        self.set_social(max(self.social - Country.INITIAL_REDUCTION, 0))
+    def new_turn(self, effects=None):
+        """ make a country moved to the next turn
+
+        Args:
+            effects (dict): list of effect that are currently applied. Only the Key Ecology, Economy and Social are used
+        """
+        bonus_ecology = 0
+        bonus_economy = 0
+        bonus_social = 0
+        if effects is not None:
+            if 'Ecology' in effects.keys():
+                bonus_ecology = effects['Ecology']
+            if 'Economy' in effects.keys():
+                bonus_economy = effects['Economy']
+            if 'Social' in effects.keys():
+                bonus_social = effects['Social']
+        self.set_ecology(min(max(self.ecology - Country.INITIAL_REDUCTION + bonus_ecology, 0), 1))
+        self.set_economy(min(max(self.economy - Country.INITIAL_REDUCTION + bonus_economy, 0), 1))
+        self.set_social(min(max(self.social - Country.INITIAL_REDUCTION + bonus_social, 0), 1))
 
     def is_win(self):
         """ Verifies if the country match the winning condition

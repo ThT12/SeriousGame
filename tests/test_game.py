@@ -1,23 +1,26 @@
-from seriousgame.game import Game
-from seriousgame.player import Player
 from seriousgame.country import Country
-from seriousgame.io import outputs
-from seriousgame.io import inputs
-from seriousgame.improvements import Improvements
+from seriousgame.game import Game
 from seriousgame.improvements import Improvement
-
+from seriousgame.improvements import Improvements
+from seriousgame.io import inputs
+from seriousgame.io import outputs
+from seriousgame.player import Player
 
 game = Game()
 
 
 def test_new_turn(mocker):
+    effects = {'Influence': 4}
+    mocker.patch.object(Improvements, 'get_current_effects', return_value=effects)
     mocker.patch.object(Player, 'new_turn', return_value=None)
     mocker.patch.object(Country, 'new_turn', return_value=None)
     mocker.patch.object(Game, 'let_player_play', return_value=None)
     game.new_turn()
     assert Player.new_turn.call_count == 1
+    assert Player.new_turn.call_args[0] == (effects,)
     assert Game.let_player_play.call_count == 1
     assert Country.new_turn.call_count == 1
+    assert Country.new_turn.call_args[0] == (effects,)
 
 
 def test_play_win(mocker):

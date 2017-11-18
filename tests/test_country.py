@@ -20,6 +20,23 @@ def test_new_turn_with_min():
     assert country.social == 0
 
 
+def test_new_turn_with_effect():
+    init_value = 0.1
+    country = Country(init_ecology=init_value, init_economy=init_value, init_social=init_value)
+    country.new_turn({'Ecology': 0.2, 'Economy': -0.01, 'Social': 0.1})
+    assert country.ecology == init_value - country.INITIAL_REDUCTION + 0.2
+    assert country.economy == init_value - country.INITIAL_REDUCTION - 0.01
+    assert country.social == init_value - country.INITIAL_REDUCTION + 0.1
+
+
+def test_new_turn_with_max():
+    country = Country(init_ecology=1, init_economy=1, init_social=1)
+    country.new_turn({'Ecology': 2, 'Economy': 2, 'Social': 2})
+    assert country.ecology == 1
+    assert country.economy == 1
+    assert country.social == 1
+
+
 def test_is_win():
     country = Country(init_ecology=1, init_economy=1, init_social=1)
     assert country.is_win()

@@ -1,3 +1,4 @@
+from seriousgame.io import outputs
 
 
 class Country(object):
@@ -57,6 +58,13 @@ class Country(object):
             (bool): True if the country match one loosing condition
         """
         return self.economy == 0 or self.ecology == 0 or self.social == 0
+
+    def display(self):
+        """ Display a country """
+        outputs.display_country_header(self.name)
+        outputs.display_country_level('Ecology', self.ecology)
+        outputs.display_country_level('Economy', self.economy)
+        outputs.display_country_level('Social ', self.social)
 
 
 def verify_level_value(value):

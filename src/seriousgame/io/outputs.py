@@ -46,3 +46,24 @@ def display_influence_available(player):
         player (Player): influence of this player is displayed
     """
     print(''.join(['You have ', str(player.influence), ' influence point(s) available']))
+
+
+def display_country_header(name):
+    """ Display the country name
+
+    Args:
+        name (str): Country name
+    """
+    print(''.join(['The current situation in ', name, ' is the following:']))
+
+
+def display_country_level(name, level):
+    """ Display a country level with a progression bar
+
+    Args:
+        name (str): name of the level
+        level (float): level of the country between 0 and 1
+    """
+    level = int(level * 100)
+    str_level = ''.join(['|' * level, ' ' * (100 - level)])
+    print(''.join([name, ' level=[', str_level, ']', ' ', str(level), '%']))

@@ -1,10 +1,10 @@
-from io import StringIO
 import sys
+from io import StringIO
 
+from seriousgame.country import Country
 from seriousgame.improvements import Improvement
 from seriousgame.io import outputs
 from seriousgame.player import Player
-
 
 improvement_green = Improvement(title='My First improvement', influence_cost=1, description='My First description')
 improvement_red = Improvement(title='My Second improvement', influence_cost=9, description='My Second description')
@@ -57,10 +57,26 @@ def test_display_improvements_without_improvement(mocker):
     assert output.find('No improvement available') != -1
 
 
-player = Player(influence=5)
-
-
 def test_display_influence_available(mocker):
+    player = Player(influence=5)
     mocker.patch('sys.stdout', new_callable=StringIO)
     outputs.display_influence_available(player)
     assert sys.stdout.getvalue().find('5') != -1
+
+
+def test_display_country_header(mocker):
+    mocker.patch('sys.stdout', new_callable=StringIO)
+    name = 'Name'
+    outputs.display_country_header(name)
+    assert sys.stdout.getvalue().find(name) != -1
+
+
+def test_display_country_level(mocker):
+    mocker.patch('sys.stdout', new_callable=StringIO)
+    level = 0.28
+    name = 'Name'
+    outputs.display_country_level(name, level)
+    output = sys.stdout.getvalue()
+    assert output.find(name) != -1
+    assert output.count('|') == int(level * 100)
+    assert output.count(' ') == int((1-level) * 100) + 2

@@ -14,11 +14,13 @@ def test_new_turn(mocker):
     mocker.patch.object(Improvements, 'get_current_effects', return_value=effects)
     mocker.patch.object(Player, 'new_turn', return_value=None)
     mocker.patch.object(Country, 'new_turn', return_value=None)
+    mocker.patch.object(Country, 'display', return_value=None)
     mocker.patch.object(Game, 'let_player_play', return_value=None)
     game.new_turn()
     assert Player.new_turn.call_count == 1
     assert Player.new_turn.call_args[0] == (effects,)
     assert Game.let_player_play.call_count == 1
+    assert Country.display.call_count == 1
     assert Country.new_turn.call_count == 1
     assert Country.new_turn.call_args[0] == (effects,)
 

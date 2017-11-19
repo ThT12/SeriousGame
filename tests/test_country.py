@@ -1,6 +1,7 @@
 import pytest
 
 from seriousgame.country import Country, verify_level_value
+from seriousgame.io import outputs
 
 
 def test_new_turn_no_min():
@@ -59,6 +60,15 @@ def test_is_lost():
 def test_is_not_lost():
     country = Country(init_ecology=0.01, init_economy=0.01, init_social=0.01)
     assert not country.is_lost()
+
+
+def test_display_country(mocker):
+    mocker.patch.object(outputs, 'display_country_level', return_value=None)
+    mocker.patch.object(outputs, 'display_country_header', return_value=None)
+    country = Country()
+    country.display()
+    assert outputs.display_country_header.call_count == 1
+    assert outputs.display_country_level.call_count == 3
 
 
 def test_verify_level_value():

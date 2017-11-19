@@ -22,10 +22,11 @@ class Game(object):
 
     def new_turn(self):
         """ Makes a new turn in the game"""
-        current_effect = self.improvements.get_current_effects()
-        self.player.new_turn(current_effect)
+        self.country.display()
         self.let_player_play()
+        current_effect = self.improvements.get_current_effects()
         self.country.new_turn(current_effect)
+        self.player.new_turn(current_effect)
 
     def play(self):
         """ Launch the game until it is finish"""

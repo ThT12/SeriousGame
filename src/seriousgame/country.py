@@ -18,11 +18,6 @@ class Country(object):
         self.economy = init_economy
 
     def __setattr__(self, name, value):
-        """ set the property ecology after a value control
-        
-        Args:
-            value (float): new ecology value 
-        """
         if name != 'name':
             verify_level_value(value)
         super(Country, self).__setattr__(name, value)

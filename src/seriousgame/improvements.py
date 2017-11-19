@@ -58,10 +58,14 @@ class Improvements(object):
             *args (Improvement): all improvements in the same scale
         """
         self.improvements = args
-        for improvement in self.improvements:
+
+    def __setattr__(self, name, value):
+        """ Verifies that all requirements to match are in the Improvements"""
+        for improvement in value:
             for requirement in improvement.requirements:
-                if requirement not in self.improvements:
+                if requirement not in value:
                     raise KeyError('All requirements to match must be in the Improvements')
+        super(Improvements, self).__setattr__(name, value)
 
     def are_improvement_requirements_reached(self, improvement):
         """ test if the improvement have all his requirement reached. Return an error if the improvement is not in self

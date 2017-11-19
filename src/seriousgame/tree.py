@@ -24,3 +24,11 @@ class ProgressionTree(object):
         for improvements_obj in self.tree:
             effects = improvements.merge_effects(effects, improvements_obj.get_current_effects())
         return effects
+
+    def get_improvements_available(self):
+        """
+        Returns:
+            (list): return a list of improvement that are available to be done in the tree
+        """
+        return [improvement for improvements_in_tree in self.tree
+                for improvement in improvements_in_tree.get_improvements_available()]

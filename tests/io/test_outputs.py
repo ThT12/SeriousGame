@@ -5,6 +5,7 @@ from seriousgame.improvements import Improvement
 from seriousgame.improvements import Improvements
 from seriousgame.io import outputs
 from seriousgame.player import Player
+from seriousgame.tree import ProgressionTree
 
 improvement_green = Improvement(title='My First improvement', influence_cost=1, description='My First description')
 improvement_red = Improvement(title='My Second improvement', influence_cost=9, description='My Second description')
@@ -65,6 +66,13 @@ def test_display_improvements_available(mocker):
     outputs.display_improvements_available(improvements)
     assert sys.stdout.getvalue().find(improvements_name) != -1
     assert outputs.display_improvements.call_args[0] == (improvements.get_improvements_available(), None)
+
+
+def test_display_tree_available(mocker):
+    mocker.patch.object(outputs, 'display_improvements_available', return_value=None)
+    tree = ProgressionTree()
+    outputs.display_tree_available(tree)
+    assert outputs.display_improvements_available.call_count == len(tree.tree)
 
 
 def test_display_influence_available(mocker):

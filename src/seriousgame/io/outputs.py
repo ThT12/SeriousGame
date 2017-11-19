@@ -50,6 +50,17 @@ def display_improvements_available(improvements, influence_available=None):
     display_improvements(improvements.get_improvements_available(), influence_available)
 
 
+def display_tree_available(tree, influence_available=None):
+    """ Display all improvements available in the tree
+
+    Args:
+        tree (Tree): tree to display
+        influence_available (int): influence available to compare with to set the influence_cost color
+    """
+    for improvements in tree.tree:
+        display_improvements_available(improvements, influence_available)
+
+
 def display_influence_available(player):
     """ display the influence available for a player
 

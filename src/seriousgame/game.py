@@ -1,6 +1,6 @@
 from seriousgame.country import Country
 from seriousgame.improvements import Improvement
-from seriousgame.improvements import Improvements
+from seriousgame.tree import ProgressionTree
 from seriousgame.io import inputs
 from seriousgame.io import outputs
 from seriousgame.player import Player
@@ -8,23 +8,23 @@ from seriousgame.player import Player
 
 class Game(object):
 
-    def __init__(self, player=Player(), country=Country(), improvements=Improvements()):
+    def __init__(self, player=Player(), country=Country(), tree=ProgressionTree()):
         """ Constructor
 
         Args:
             player (Player): player information
             country (Country): country information
-            improvements (Improvements): improvement available for this game
+            tree (ProgressionTree): Tree that contain improvement available for this game
         """
         self.player = player
         self.country = country
-        self.improvements = improvements
+        self.tree = tree
 
     def new_turn(self):
         """ Makes a new turn in the game"""
         self.country.display()
         self.let_player_play()
-        current_effect = self.improvements.get_current_effects()
+        current_effect = self.tree.get_current_effects()
         self.country.new_turn(current_effect)
         self.player.new_turn(current_effect)
 
@@ -43,8 +43,8 @@ class Game(object):
         improvement = Improvement()
         while improvement is not None:
             outputs.display_influence_available(self.player)
-            outputs.display_improvements_available(self.improvements, self.player.influence)
-            improvement_available = self.improvements.get_improvements_available()
+            outputs.display_tree_available(self.tree, self.player.influence)
+            improvement_available = self.tree.get_improvements_available()
             if len(improvement_available) != 0:
                 improvement = inputs.ask_improvements_to_make(improvement_available, self.player)
                 if improvement is not None:

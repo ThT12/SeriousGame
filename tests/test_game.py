@@ -1,17 +1,17 @@
 from seriousgame.country import Country
 from seriousgame.game import Game
 from seriousgame.improvements import Improvement
-from seriousgame.improvements import Improvements
 from seriousgame.io import inputs
 from seriousgame.io import outputs
 from seriousgame.player import Player
+from seriousgame.tree import ProgressionTree
 
 game = Game()
 
 
 def test_new_turn(mocker):
     effects = {'Influence': 4}
-    mocker.patch.object(Improvements, 'get_current_effects', return_value=effects)
+    mocker.patch.object(ProgressionTree, 'get_current_effects', return_value=effects)
     mocker.patch.object(Player, 'new_turn', return_value=None)
     mocker.patch.object(Country, 'new_turn', return_value=None)
     mocker.patch.object(Country, 'display', return_value=None)
@@ -50,31 +50,31 @@ def test_play_lost(mocker):
 def test_let_player_play_no_improvement(mocker):
     mocker.patch.object(outputs, 'display_influence_available', return_value=None)
     mocker.patch.object(outputs, 'display_improvements_available', return_value=None)
-    mocker.patch.object(Improvements, 'get_improvements_available', return_value=[])
+    mocker.patch.object(ProgressionTree, 'get_improvements_available', return_value=[])
     influence_in = game.player.influence
-    improvements_done_in = len(game.improvements.get_improvements_done())
+    improvements_done_in = len(game.tree.get_improvements_available())
     game.let_player_play()
     assert influence_in == game.player.influence
-    assert improvements_done_in == len(game.improvements.get_improvements_done())
+    assert improvements_done_in == len(game.tree.get_improvements_available())
 
 
 def test_let_player_play_player_done(mocker):
     mocker.patch.object(outputs, 'display_influence_available', return_value=None)
     mocker.patch.object(outputs, 'display_improvements_available', return_value=None)
-    mocker.patch.object(Improvements, 'get_improvements_available', return_value=[Improvement()])
+    mocker.patch.object(ProgressionTree, 'get_improvements_available', return_value=[Improvement()])
     mocker.patch.object(inputs, 'ask_improvements_to_make', return_value=None)
     influence_in = game.player.influence
-    improvements_done_in = len(game.improvements.get_improvements_done())
+    improvements_done_in = len(game.tree.get_improvements_available())
     game.let_player_play()
     assert influence_in == game.player.influence
-    assert improvements_done_in == len(game.improvements.get_improvements_done())
+    assert improvements_done_in == len(game.tree.get_improvements_available())
 
 
 def test_let_player_play_improvement(mocker):
     my_improvement = Improvement(status=False)
     mocker.patch.object(outputs, 'display_influence_available', return_value=None)
     mocker.patch.object(outputs, 'display_improvements_available', return_value=None)
-    mocker.patch.object(Improvements, 'get_improvements_available', return_value=[my_improvement])
+    mocker.patch.object(ProgressionTree, 'get_improvements_available', return_value=[my_improvement])
     mocker.patch.object(inputs, 'ask_improvements_to_make', side_effect=[my_improvement, None])
     mocker.patch.object(my_improvement, 'develop', return_value=None)
     mocker.patch.object(Player, 'use_influence', return_value=None)

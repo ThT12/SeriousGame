@@ -111,9 +111,25 @@ class Improvements(object):
         """
         effects = {}
         for improvement in self.get_improvements_done():
-            for key in improvement.effects.keys():
-                if key in effects:
-                    effects[key] += improvement.effects[key]
-                else:
-                    effects.update({key: improvement.effects[key]})
+            effects = merge_effects(effects, improvement.effects)
         return effects
+
+
+def merge_effects(effects1, effects2):
+    """ merge two dictionary. If two improvement have the same type of effects then their values are summed
+
+    Args:
+        effects1 (dict): first dictionary to merge
+        effects2 (dict): second dictionary to merge
+
+    Returns:
+        (dict): merged dictionaries
+    """
+    # TODO:  header
+    effects = effects1
+    for key in effects2.keys():
+        if key in effects:
+            effects[key] += effects2[key]
+        else:
+            effects.update({key: effects2[key]})
+    return effects

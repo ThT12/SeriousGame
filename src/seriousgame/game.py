@@ -32,6 +32,11 @@ class Game(object):
         """ Launch the game until it is finish"""
         while not self.country.is_win() and not self.country.is_lost():
             self.new_turn()
+        self.country.display()
+        if self.country.is_win():
+            outputs.display_win()
+        else:
+            outputs.display_lost()
 
     def let_player_play(self):
         """ Let the player do all improvement he want/can"""

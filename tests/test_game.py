@@ -26,21 +26,25 @@ def test_new_turn(mocker):
 
 
 def test_play_win(mocker):
-    mocker.patch.object(Country, 'is_win', side_effect=[False, False, False, True])
+    mocker.patch.object(Country, 'is_win', side_effect=[False, False, False, True, True])
     mocker.patch.object(Country, 'is_lost', return_value=False)
+    mocker.patch.object(Country, 'display', return_value=None)
     mocker.patch.object(Game, 'new_turn', return_value=None)
-    mocker.spy(Game, 'new_turn')
+    mocker.patch.object(outputs, 'display_win', return_value=None)
     game.play()
     assert Game.new_turn.call_count == 3
+    assert outputs.display_win.call_count == 1
 
 
 def test_play_lost(mocker):
     mocker.patch.object(Country, 'is_win', return_value=False)
     mocker.patch.object(Country, 'is_lost', side_effect=[False, False, False, False, True])
     mocker.patch.object(Game, 'new_turn', return_value=None)
-    mocker.spy(Game, 'new_turn')
+    mocker.patch.object(Country, 'display', return_value=None)
+    mocker.patch.object(outputs, 'display_lost', return_value=None)
     game.play()
     assert Game.new_turn.call_count == 4
+    assert outputs.display_lost.call_count == 1
 
 
 def test_let_player_play_no_improvement(mocker):

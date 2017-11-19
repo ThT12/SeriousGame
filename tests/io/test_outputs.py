@@ -80,3 +80,15 @@ def test_display_country_level(mocker):
     assert output.find(name) != -1
     assert output.count('|') == int(level * 100)
     assert output.count(' ') == int((1-level) * 100) + 2
+
+
+def test_display_win(mocker):
+    mocker.patch('sys.stdout', new_callable=StringIO)
+    outputs.display_win()
+    assert sys.stdout.getvalue().find('win') != -1
+
+
+def test_display_lost(mocker):
+    mocker.patch('sys.stdout', new_callable=StringIO)
+    outputs.display_lost()
+    assert sys.stdout.getvalue().find('loose') != -1

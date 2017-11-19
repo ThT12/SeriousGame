@@ -67,3 +67,13 @@ def display_country_level(name, level):
     level = int(level * 100)
     str_level = ''.join(['|' * level, ' ' * (100 - level)])
     print(''.join([name, ' level=[', str_level, ']', ' ', str(level), '%']))
+
+
+def display_win():
+    """ Display win message """
+    print('Congratulation, you win !')
+
+
+def display_lost():
+    """ Display loose message """
+    print('Sorry, you loose ! Try again !')

@@ -51,20 +51,25 @@ class Improvement(object):
 
 class Improvements(object):
 
-    def __init__(self, *args):
+    def __init__(self, name='Name', improvements=None):
         """ Constructor. Verifies that all requirements are in the Improvements
 
         Args:
-            *args (Improvement): all improvements in the same scale
+            name (str): name of the improvement
+            improvements (tuple): Tuple of improvements in the same scale
         """
-        self.improvements = args
+        if improvements is None:
+            improvements = ()
+        self.name = name
+        self.improvements = improvements
 
     def __setattr__(self, name, value):
         """ Verifies that all requirements to match are in the Improvements"""
-        for improvement in value:
-            for requirement in improvement.requirements:
-                if requirement not in value:
-                    raise KeyError('All requirements to match must be in the Improvements')
+        if name != 'name':
+            for improvement in value:
+                for requirement in improvement.requirements:
+                    if requirement not in value:
+                        raise KeyError('All requirements to match must be in the Improvements')
         super(Improvements, self).__setattr__(name, value)
 
     def are_improvement_requirements_reached(self, improvement):

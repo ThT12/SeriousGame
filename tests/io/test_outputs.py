@@ -1,8 +1,8 @@
 import sys
 from io import StringIO
 
-from seriousgame.country import Country
 from seriousgame.improvements import Improvement
+from seriousgame.improvements import Improvements
 from seriousgame.io import outputs
 from seriousgame.player import Player
 
@@ -55,6 +55,16 @@ def test_display_improvements_without_improvement(mocker):
     assert outputs.display_improvement.call_count == 0
     output = sys.stdout.getvalue()
     assert output.find('No improvement available') != -1
+
+
+def test_display_improvements_available(mocker):
+    mocker.patch('sys.stdout', new_callable=StringIO)
+    mocker.patch.object(outputs, 'display_improvements', return_value=None)
+    improvements_name = 'Farming'
+    improvements = Improvements(improvements_name, tuple(list_improvements))
+    outputs.display_improvements_available(improvements)
+    assert sys.stdout.getvalue().find(improvements_name) != -1
+    assert outputs.display_improvements.call_args[0] == (improvements.get_improvements_available(), None)
 
 
 def test_display_influence_available(mocker):

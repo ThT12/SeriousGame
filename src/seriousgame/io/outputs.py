@@ -39,6 +39,17 @@ def display_improvements(improvements, influence_available=None):
             display_improvement(improvement, influence_available, suffix='* ')
 
 
+def display_improvements_available(improvements, influence_available=None):
+    """ Display all improvements available for improvements
+
+    Args:
+        improvements (Improvements): improvements to display
+        influence_available (int): influence available to compare with to set the influence_cost color
+    """
+    print(' '.join(['Improvements available in', improvements.name, 'area:']))
+    display_improvements(improvements.get_improvements_available(), influence_available)
+
+
 def display_influence_available(player):
     """ display the influence available for a player
 

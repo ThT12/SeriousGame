@@ -49,7 +49,7 @@ def test_play_lost(mocker):
 
 def test_let_player_play_no_improvement(mocker):
     mocker.patch.object(outputs, 'display_influence_available', return_value=None)
-    mocker.patch.object(outputs, 'display_improvements', return_value=None)
+    mocker.patch.object(outputs, 'display_improvements_available', return_value=None)
     mocker.patch.object(Improvements, 'get_improvements_available', return_value=[])
     influence_in = game.player.influence
     improvements_done_in = len(game.improvements.get_improvements_done())
@@ -60,7 +60,7 @@ def test_let_player_play_no_improvement(mocker):
 
 def test_let_player_play_player_done(mocker):
     mocker.patch.object(outputs, 'display_influence_available', return_value=None)
-    mocker.patch.object(outputs, 'display_improvements', return_value=None)
+    mocker.patch.object(outputs, 'display_improvements_available', return_value=None)
     mocker.patch.object(Improvements, 'get_improvements_available', return_value=[Improvement()])
     mocker.patch.object(inputs, 'ask_improvements_to_make', return_value=None)
     influence_in = game.player.influence
@@ -73,7 +73,7 @@ def test_let_player_play_player_done(mocker):
 def test_let_player_play_improvement(mocker):
     my_improvement = Improvement(status=False)
     mocker.patch.object(outputs, 'display_influence_available', return_value=None)
-    mocker.patch.object(outputs, 'display_improvements', return_value=None)
+    mocker.patch.object(outputs, 'display_improvements_available', return_value=None)
     mocker.patch.object(Improvements, 'get_improvements_available', return_value=[my_improvement])
     mocker.patch.object(inputs, 'ask_improvements_to_make', side_effect=[my_improvement, None])
     mocker.patch.object(my_improvement, 'develop', return_value=None)

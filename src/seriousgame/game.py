@@ -43,7 +43,7 @@ class Game(object):
         improvement = Improvement()
         while improvement is not None:
             outputs.display_influence_available(self.player)
-            outputs.display_improvements(self.improvements.get_improvements_available(), self.player.influence)
+            outputs.display_improvements_available(self.improvements, self.player.influence)
             improvement_available = self.improvements.get_improvements_available()
             if len(improvement_available) != 0:
                 improvement = inputs.ask_improvements_to_make(improvement_available, self.player)

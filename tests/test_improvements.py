@@ -37,12 +37,14 @@ improvement_not_in_improvements = Improvement(title='Not in improvements')
 improvement_with_requirement_not_in_improvements = Improvement(title='Requirement not in improvements', requirements=(
     improvement_done, improvement_not_in_improvements))
 
-improvements = Improvements(improvement_done, another_improvement_done, improvement_available, improvement_not_available)
+improvements = Improvements('Farming', (improvement_done, another_improvement_done, improvement_available,
+                            improvement_not_available))
 
 
 def test_constructor_return_error_if_requirement_not_on_improvements():
     with pytest.raises(KeyError):
-        Improvements(improvement_done, improvement_available, improvement_with_requirement_not_in_improvements)
+        Improvements(improvements=(improvement_done, improvement_available,
+                                   improvement_with_requirement_not_in_improvements))
 
 
 def test_are_requirements_reached_return_error_if_not_in_list():

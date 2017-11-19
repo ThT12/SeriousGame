@@ -13,39 +13,19 @@ class Country(object):
             init_economy (float): initial economy level
         """
         self.name = name
-        self.ecology = None
-        self.set_ecology(init_ecology)
-        self.social = None
-        self.set_social(init_social)
-        self.economy = None
-        self.set_economy(init_economy)
+        self.ecology = init_ecology
+        self.social = init_social
+        self.economy = init_economy
 
-    def set_ecology(self, value):
+    def __setattr__(self, name, value):
         """ set the property ecology after a value control
         
         Args:
             value (float): new ecology value 
         """
-        verify_level_value(value)
-        self.ecology = value
-
-    def set_social(self, value):
-        """ set the property social after a value control
-
-        Args:
-            value (float): new social value 
-        """
-        verify_level_value(value)
-        self.social = value
-
-    def set_economy(self, value):
-        """ set the property economy after a value control
-
-        Args:
-            value (float): new economy value 
-        """
-        verify_level_value(value)
-        self.economy = value
+        if name != 'name':
+            verify_level_value(value)
+        super(Country, self).__setattr__(name, value)
 
     def new_turn(self, effects=None):
         """ make a country moved to the next turn
@@ -63,9 +43,9 @@ class Country(object):
                 bonus_economy = effects['Economy']
             if 'Social' in effects.keys():
                 bonus_social = effects['Social']
-        self.set_ecology(min(max(self.ecology - Country.INITIAL_REDUCTION + bonus_ecology, 0), 1))
-        self.set_economy(min(max(self.economy - Country.INITIAL_REDUCTION + bonus_economy, 0), 1))
-        self.set_social(min(max(self.social - Country.INITIAL_REDUCTION + bonus_social, 0), 1))
+        self.ecology = min(max(self.ecology - Country.INITIAL_REDUCTION + bonus_ecology, 0), 1)
+        self.economy = min(max(self.economy - Country.INITIAL_REDUCTION + bonus_economy, 0), 1)
+        self.social = min(max(self.social - Country.INITIAL_REDUCTION + bonus_social, 0), 1)
 
     def is_win(self):
         """ Verifies if the country match the winning condition

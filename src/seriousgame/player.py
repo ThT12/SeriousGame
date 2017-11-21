@@ -22,10 +22,10 @@ class Player(object):
         bonus = 0
         if effects is not None:
             if 'Lobbying' in effects.keys():
-                self.influence = max(self.influence + effects['Lobbying'], 0)
+                bonus += effects['Lobbying']
             if 'Influence' in effects.keys():
-                bonus = effects['Influence']
-        self.influence += Player.INITIAL_INFLUENCE_BY_TURN + bonus
+                bonus += effects['Influence']
+        self.influence = self.influence + Player.INITIAL_INFLUENCE_BY_TURN + bonus
 
     def use_influence(self, amount):
         """ make a player use is influence. Return an error if a player use more influence than he has.

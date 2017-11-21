@@ -67,7 +67,8 @@ def display_influence_available(player):
     Args:
         player (Player): influence of this player is displayed
     """
-    print(''.join(['You have ', str(player.influence), ' influence point(s) available']))
+    influence_to_display = max(player.influence, 0)
+    print(''.join(['You have ', str(influence_to_display), ' influence point(s) available']))
 
 
 def display_country_header(name):

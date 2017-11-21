@@ -75,11 +75,18 @@ def test_display_tree_available(mocker):
     assert outputs.display_improvements_available.call_count == len(tree.tree)
 
 
-def test_display_influence_available(mocker):
+def test_display_influence_available_upper_than_zero(mocker):
     player = Player(influence=5)
     mocker.patch('sys.stdout', new_callable=StringIO)
     outputs.display_influence_available(player)
     assert sys.stdout.getvalue().find('5') != -1
+
+
+def test_display_influence_available_lower_than_zero(mocker):
+    player = Player(influence=-1)
+    mocker.patch('sys.stdout', new_callable=StringIO)
+    outputs.display_influence_available(player)
+    assert sys.stdout.getvalue().find('0') != -1
 
 
 def test_display_country_header(mocker):

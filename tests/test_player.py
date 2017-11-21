@@ -38,11 +38,12 @@ def test_new_turn_with_effect_lobby_positive():
     assert player.influence == (init_influence + player.INITIAL_INFLUENCE_BY_TURN + bonus_lobby)
 
 
-def test_new_turn_with_effect_lobby_under_0():
+def test_new_turn_with_effect_influence_and_lobby_under_zero():
     init_influence = player.influence
-    bonus_lobby = - init_influence - 1
-    player.new_turn(effects={'Lobbying': bonus_lobby})
-    assert player.influence == player.INITIAL_INFLUENCE_BY_TURN
+    bonus_influence = 4
+    bonus_lobby = - init_influence - bonus_influence - 2
+    player.new_turn(effects={'Influence': bonus_influence, 'Lobbying': bonus_lobby})
+    assert player.influence == - 2 + player.INITIAL_INFLUENCE_BY_TURN
 
 
 def test_use_influence_without_error():

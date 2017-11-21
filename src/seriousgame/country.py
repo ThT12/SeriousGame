@@ -1,3 +1,4 @@
+from seriousgame.effect import EffectDescriptor
 from seriousgame.io import outputs
 
 
@@ -33,12 +34,12 @@ class Country(object):
         bonus_economy = 0
         bonus_social = 0
         if effects is not None:
-            if 'Ecology' in effects.keys():
-                bonus_ecology = effects['Ecology']
-            if 'Economy' in effects.keys():
-                bonus_economy = effects['Economy']
-            if 'Social' in effects.keys():
-                bonus_social = effects['Social']
+            if EffectDescriptor.ECOLOGY in effects.keys():
+                bonus_ecology = effects[EffectDescriptor.ECOLOGY]
+            if EffectDescriptor.ECONOMY in effects.keys():
+                bonus_economy = effects[EffectDescriptor.ECONOMY]
+            if EffectDescriptor.SOCIAL in effects.keys():
+                bonus_social = effects[EffectDescriptor.SOCIAL]
         self.ecology = min(max(self.ecology - Country.INITIAL_REDUCTION + bonus_ecology, 0), 1)
         self.economy = min(max(self.economy - Country.INITIAL_REDUCTION + bonus_economy, 0), 1)
         self.social = min(max(self.social - Country.INITIAL_REDUCTION + bonus_social, 0), 1)

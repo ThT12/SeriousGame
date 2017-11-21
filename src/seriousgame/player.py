@@ -1,3 +1,4 @@
+from seriousgame.effect import EffectDescriptor
 
 
 class Player(object):
@@ -21,10 +22,10 @@ class Player(object):
         """
         bonus = 0
         if effects is not None:
-            if 'Lobbying' in effects.keys():
-                bonus += effects['Lobbying']
-            if 'Influence' in effects.keys():
-                bonus += effects['Influence']
+            if EffectDescriptor.LOBBYING in effects.keys():
+                bonus += effects[EffectDescriptor.LOBBYING]
+            if EffectDescriptor.INFLUENCE in effects.keys():
+                bonus += effects[EffectDescriptor.INFLUENCE]
         self.influence = self.influence + Player.INITIAL_INFLUENCE_BY_TURN + bonus
 
     def use_influence(self, amount):

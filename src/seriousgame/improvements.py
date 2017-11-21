@@ -9,14 +9,14 @@ class Improvement(object):
         Args:
             title (str): improvement title
             influence_cost (int): influence cost to make this improvement
-            effects (dict): effect and intensity of the improvement
+            effects (list): list of effects
             requirements (:type: tuple of Improvement): tuple of Improvements that have to been done to have this one
                 available
             status (bool): True if this improvement have been done
             description (str): Detail of this improvement
         """
         if not effects:
-            effects = {}
+            effects = []
         if not requirements:
             requirements = ()
         self.title = title
@@ -47,6 +47,17 @@ class Improvement(object):
         if self.status:
             raise KeyError('You cannot develop an improvement already done')
         self.status = True
+
+    def get_current_effects(self):
+        """
+        Returns:
+            (dict): return all effects currently applied. If two improvement have the same EffectDescriptor then their
+                values are summed
+        """
+        effects = {}
+        for effect in self.effects:
+            effects = merge_effects(effects, effect.get_current_effect())
+        return effects
 
 
 class Improvements(object):
@@ -111,7 +122,7 @@ class Improvements(object):
         """
         effects = {}
         for improvement in self.get_improvements_done():
-            effects = merge_effects(effects, improvement.effects)
+            effects = merge_effects(effects, improvement.get_current_effects())
         return effects
 
 
@@ -125,7 +136,6 @@ def merge_effects(effects1, effects2):
     Returns:
         (dict): merged dictionaries
     """
-    # TODO:  header
     effects = effects1
     for key in effects2.keys():
         if key in effects:

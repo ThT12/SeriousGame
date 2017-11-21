@@ -1,12 +1,12 @@
-from seriousgame.tree import ProgressionTree
 from seriousgame import improvements
-
+from seriousgame.effect import EffectDescriptor
+from seriousgame.tree import ProgressionTree
 
 tree = ProgressionTree()
 
 
 def test_get_current_effects(mocker):
-    value = {'test': 3}
+    value = {EffectDescriptor.INFLUENCE: 3}
     mocker.patch.object(improvements, 'merge_effects', return_value=value)
     mocker.patch.object(improvements.Improvements, 'get_current_effects', return_value=value)
     effects = tree.get_current_effects()

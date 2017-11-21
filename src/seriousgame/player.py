@@ -20,8 +20,11 @@ class Player(object):
             effects (dict): list of effect that are currently applied. Only the Key Influence is used.
         """
         bonus = 0
-        if effects is not None and 'Influence' in effects.keys():
-            bonus = effects['Influence']
+        if effects is not None:
+            if 'Lobbying' in effects.keys():
+                self.influence = max(self.influence + effects['Lobbying'], 0)
+            if 'Influence' in effects.keys():
+                bonus = effects['Influence']
         self.influence += Player.INITIAL_INFLUENCE_BY_TURN + bonus
 
     def use_influence(self, amount):

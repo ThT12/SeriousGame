@@ -1,6 +1,6 @@
 # TODO dev: 
 * effect with delay
-* lobbying
+* finish lobbying one turn effect
 * tutorial
 * improvement as number
 * display improvement done

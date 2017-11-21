@@ -18,7 +18,7 @@ def test_two_new_turn():
     assert player.influence == init_influence + player.INITIAL_INFLUENCE_BY_TURN * 2
 
 
-def test_new_turn_with_effect_not_influence():
+def test_new_turn_with_effect_not_influence_or_lobby():
     init_influence = player.influence
     player.new_turn(effects={'Not influence': 4})
     assert player.influence == init_influence + player.INITIAL_INFLUENCE_BY_TURN
@@ -29,6 +29,20 @@ def test_new_turn_with_effect_influence():
     bonus_influence = 4
     player.new_turn(effects={'Influence': bonus_influence})
     assert player.influence == (init_influence + player.INITIAL_INFLUENCE_BY_TURN + bonus_influence)
+
+
+def test_new_turn_with_effect_lobby_positive():
+    init_influence = player.influence
+    bonus_lobby = 4
+    player.new_turn(effects={'Lobbying': bonus_lobby})
+    assert player.influence == (init_influence + player.INITIAL_INFLUENCE_BY_TURN + bonus_lobby)
+
+
+def test_new_turn_with_effect_lobby_under_0():
+    init_influence = player.influence
+    bonus_lobby = - init_influence - 1
+    player.new_turn(effects={'Lobbying': bonus_lobby})
+    assert player.influence == player.INITIAL_INFLUENCE_BY_TURN
 
 
 def test_use_influence_without_error():

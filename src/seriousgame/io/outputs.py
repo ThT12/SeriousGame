@@ -19,9 +19,9 @@ def display_improvement(improvement, influence_available=None, suffix=''):
     else:
         color = ''
         end_color = ''
-    str_effects = str(improvement.effects)
     string_to_print = ''.join([suffix, improvement.title, ': Cost=', color, str(improvement.influence_cost), end_color,
-                               ' ; Description=', improvement.description, ' ; Effects=', str_effects])
+                               ' ; Description=', improvement.description, ' ; Effects=',
+                               effects_to_str(improvement.effects)])
     print(string_to_print)
 
 
@@ -100,3 +100,15 @@ def display_win():
 def display_lost():
     """ Display loose message """
     print('Sorry, you loose ! Try again !')
+
+
+def effects_to_str(effects):
+    """ construct a string with effects
+
+    Args:
+        effects (list): list of effect
+
+    Returns:
+        (str): all effect in a string
+    """
+    return ' - '.join([str(effect) for effect in effects])

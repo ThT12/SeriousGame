@@ -1,6 +1,7 @@
 import sys
 from io import StringIO
 
+from seriousgame.effect import Effect
 from seriousgame.improvements import Improvement
 from seriousgame.improvements import Improvements
 from seriousgame.io import outputs
@@ -117,3 +118,12 @@ def test_display_lost(mocker):
     mocker.patch('sys.stdout', new_callable=StringIO)
     outputs.display_lost()
     assert sys.stdout.getvalue().find('loose') != -1
+
+
+def test_display_effects(mocker):
+    effects = [Effect(),  Effect()]
+    mocker.patch.object(Effect, '__str__', return_value='Effect')
+    str_effects = outputs.effects_to_str(effects)
+    assert Effect.__str__.call_count == len(effects)
+    assert str_effects.count('Effect') == len(effects)
+

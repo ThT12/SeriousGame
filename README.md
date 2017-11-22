@@ -1,5 +1,4 @@
 # TODO dev: 
-* display of effect
 * tutorial
 * improvement as number
 * display improvement done

@@ -11,6 +11,28 @@ def test_constructor_effect():
     assert effect_lobbying.end_effect == 1
 
 
+def test_str():
+    effect_descriptor = EffectDescriptor.INFLUENCE
+    value = 3
+    start_effect = 5
+    duration = 2
+    effect = Effect(effect_descriptor=effect_descriptor, value=value, start_effect=start_effect,
+                    end_effect=start_effect+duration)
+    str_effect = str(effect)
+    assert str_effect.find(effect_descriptor) != -1
+    assert str_effect.find(str(value)) != -1
+    assert str_effect.find(str(start_effect)) != -1
+    assert str_effect.find(str(duration)) != -1
+
+    effect_inf = Effect(effect_descriptor=effect_descriptor, value=value, start_effect=start_effect,
+                        end_effect=float('inf'))
+    str_effect_inf = str(effect_inf)
+    assert str_effect_inf.find(effect_descriptor) != -1
+    assert str_effect_inf.find(str(value)) != -1
+    assert str_effect_inf.find(str(start_effect)) != -1
+    assert str_effect_inf.find('permanently') != -1
+
+
 def test_new_turn():
     effect = Effect()
     turn = effect.turn_since_done

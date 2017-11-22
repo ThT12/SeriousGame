@@ -1,5 +1,5 @@
 # TODO dev: 
-* effect: add turn count on effect + display of effect
+* display of effect
 * tutorial
 * improvement as number
 * display improvement done

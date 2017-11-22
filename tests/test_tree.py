@@ -22,3 +22,9 @@ def test_get_improvements_available(mocker):
                         side_effect=[[improvement_one, improvement_two], [improvement_three]])
     improvements_list = tree.get_improvements_available()
     assert improvements_list == [improvement_one, improvement_two, improvement_three]
+
+
+def test_new_turn(mocker):
+    mocker.patch.object(improvements.Improvements, 'new_turn', return_value= None)
+    tree.new_turn()
+    assert improvements.Improvements.new_turn.call_count == len(tree.tree)

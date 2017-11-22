@@ -7,6 +7,7 @@ from seriousgame.improvements import Improvement, Improvements
 effect_one = Effect(effect_descriptor=EffectDescriptor.INFLUENCE, value=1)
 effect_two = Effect(effect_descriptor=EffectDescriptor.INFLUENCE, value=4)
 effect_tree = Effect(effect_descriptor=EffectDescriptor.ECOLOGY, value=-0.01)
+improvement = Improvement(effects=[effect_one, effect_two, effect_tree])
 
 
 def test_improvement_comparator():
@@ -22,19 +23,18 @@ def test_improvement_comparator():
 
 
 def test_develop_improvement_already_done():
-    improvement = Improvement(status=True)
+    improvement_already_done = Improvement(status=True)
     with pytest.raises(KeyError):
-        improvement.develop()
+        improvement_already_done.develop()
 
 
 def test_develop_improvement_ok():
-    improvement = Improvement(status=False)
-    improvement.develop()
-    assert improvement.status
+    improvement_ok = Improvement(status=False)
+    improvement_ok.develop()
+    assert improvement_ok.status
 
 
 def test_improvement_get_current_effect(mocker):
-    improvement = Improvement(effects=[effect_one, effect_two, effect_tree])
     value = {EffectDescriptor.INFLUENCE: 3}
     mocker.patch.object(improvements, 'merge_effects', return_value=value)
     mocker.patch.object(Effect, 'get_current_effect', return_value=None)
@@ -42,6 +42,12 @@ def test_improvement_get_current_effect(mocker):
     assert improvements.merge_effects.call_count == len(improvement.effects)
     assert Effect.get_current_effect.call_count == len(improvement.effects)
     assert effects == value
+
+
+def test_improvement_new_turn(mocker):
+    mocker.patch.object(Effect, 'new_turn', return_value=None)
+    improvement.new_turn()
+    assert Effect.new_turn.call_count == len(improvement.effects)
 
 
 improvement_done = Improvement(title='Done', effects=[effect_one], status=True)
@@ -93,6 +99,12 @@ def test_improvements_get_current_effects(mocker):
     assert improvements.merge_effects.call_count == len(improvements_obj.get_improvements_done())
     assert Improvement.get_current_effects.call_count == len(improvements_obj.get_improvements_done())
     assert effects == value
+
+
+def test_improvements_new_turn(mocker):
+    mocker.patch.object(Improvement, 'new_turn', return_value=None)
+    improvements_obj.new_turn()
+    assert Improvement.new_turn.call_count == len(improvements_obj.improvements)
 
 
 def test_merge_effects():

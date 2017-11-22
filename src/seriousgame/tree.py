@@ -32,3 +32,8 @@ class ProgressionTree(object):
         """
         return [improvement for improvements_in_tree in self.tree
                 for improvement in improvements_in_tree.get_improvements_available()]
+
+    def new_turn(self):
+        """ Apply a new turn on all Improvements """
+        for improvements_in_tree in self.tree:
+            improvements_in_tree.new_turn()

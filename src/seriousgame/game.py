@@ -27,6 +27,7 @@ class Game(object):
         current_effect = self.tree.get_current_effects()
         self.country.new_turn(current_effect)
         self.player.new_turn(current_effect)
+        self.tree.new_turn()
 
     def play(self):
         """ Launch the game until it is finish"""

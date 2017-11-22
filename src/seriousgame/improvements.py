@@ -59,6 +59,11 @@ class Improvement(object):
             effects = merge_effects(effects, effect.get_current_effect())
         return effects
 
+    def new_turn(self):
+        """ Apply a new turn on all effects """
+        for effect in self.effects:
+            effect.new_turn()
+
 
 class Improvements(object):
 
@@ -124,6 +129,11 @@ class Improvements(object):
         for improvement in self.get_improvements_done():
             effects = merge_effects(effects, improvement.get_current_effects())
         return effects
+
+    def new_turn(self):
+        """ Apply a new turn on all Improvement """
+        for improvement in self.improvements:
+            improvement.new_turn()
 
 
 def merge_effects(effects1, effects2):

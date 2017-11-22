@@ -38,3 +38,13 @@ def test_ask_improvements_to_make_when_not_done_and_not_enough_influence(mocker)
     assert out is None
     output = sys.stdout.getvalue()
     assert output.find('not have enough influence') != -1
+
+
+def test_ask_player_name_and_country(mocker):
+    name = 'Name'
+    country = 'Country'
+    mocker.patch('sys.stdout', new_callable=StringIO)
+    mocker.patch('builtins.input', side_effect=[name, country])
+    [player_name, country_name] = inputs.ask_player_name_and_country()
+    assert player_name == name
+    assert country_name == country

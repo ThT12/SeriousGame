@@ -1,3 +1,4 @@
+import time
 
 
 def display_improvement(improvement, influence_available=None, suffix=''):
@@ -112,3 +113,20 @@ def effects_to_str(effects):
         (str): all effect in a string
     """
     return ' - '.join([str(effect) for effect in effects])
+
+
+def display_context_part_one():
+    """ Display the game introduction part one """
+    print('Welcome in my World simulator !')
+    print('You are here to try to save a simulation of your country.')
+
+
+def display_context_part_two():
+    """ Display the game introduction part two """
+    print('Your country is at a turning point. In one direction, the ecology will collapse, the economy will crash and '
+          'the social revolution will start. \nIn the other direction, everything will move in a better direction to '
+          'construct a better world. \nYou will have to influence wisely the people in your country to choose the right'
+          ' direction.')
+    input('Press enter to continue ...\n')
+
+

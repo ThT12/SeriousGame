@@ -31,6 +31,7 @@ class Game(object):
 
     def play(self):
         """ Launch the game until it is finish"""
+        self.game_introduction()
         while not self.country.is_win() and not self.country.is_lost():
             self.new_turn()
         self.country.display()
@@ -53,3 +54,10 @@ class Game(object):
                     self.player.use_influence(improvement.influence_cost)
             else:
                 improvement = None
+
+    def game_introduction(self):
+        outputs.display_context_part_one()
+        [player_name, country_name] = inputs.ask_player_name_and_country()
+        self.player.name = player_name
+        self.country.name = country_name
+        outputs.display_context_part_two()

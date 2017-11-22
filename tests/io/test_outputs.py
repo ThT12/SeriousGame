@@ -127,3 +127,10 @@ def test_display_effects(mocker):
     assert Effect.__str__.call_count == len(effects)
     assert str_effects.count('Effect') == len(effects)
 
+
+def test_display_introduction(mocker):
+    mocker.patch('sys.stdout', new_callable=StringIO)
+    mocker.patch('builtins.input', return_value=None)
+    outputs.display_context_part_one()
+    outputs.display_context_part_two()
+    assert len(sys.stdout.getvalue()) > 0

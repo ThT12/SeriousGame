@@ -28,6 +28,7 @@ def test_new_turn(mocker):
 
 
 def test_play_win(mocker):
+    mocker.patch.object(Game, 'game_introduction', return_value=None)
     mocker.patch.object(Country, 'is_win', side_effect=[False, False, False, True, True])
     mocker.patch.object(Country, 'is_lost', return_value=False)
     mocker.patch.object(Country, 'display', return_value=None)
@@ -39,6 +40,7 @@ def test_play_win(mocker):
 
 
 def test_play_lost(mocker):
+    mocker.patch.object(Game, 'game_introduction', return_value=None)
     mocker.patch.object(Country, 'is_win', return_value=False)
     mocker.patch.object(Country, 'is_lost', side_effect=[False, False, False, False, True])
     mocker.patch.object(Game, 'new_turn', return_value=None)
@@ -83,4 +85,15 @@ def test_let_player_play_improvement(mocker):
     game.let_player_play()
     assert my_improvement.develop.call_count == 1
     assert Player.use_influence.call_count == 1
+
+
+def test_game_introduction(mocker):
+    name = 'Name'
+    country = 'Country'
+    mocker.patch.object(outputs, 'display_context_part_one', return_value=None)
+    mocker.patch.object(inputs, 'ask_player_name_and_country', return_value=[name, country])
+    mocker.patch.object(outputs, 'display_context_part_two', return_value=None)
+    game.game_introduction()
+    assert game.player.name == name
+    assert game.country.name == country
 

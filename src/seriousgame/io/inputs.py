@@ -28,3 +28,13 @@ def ask_improvements_to_make(improvements, player):
             else:
                 print('I did not understand you. Please try again.')
     return improvement
+
+
+def ask_player_name_and_country():
+    player_name = input('First, can you give me your name please?\n')
+    print(' '.join(['Hello', player_name, 'and thanks!']))
+    country_name = input('Now can you give me your country name please?\n')
+    print(' '.join(['Thanks. So you are living in', country_name, '. Good to know!']))
+    return [player_name, country_name]
+
+

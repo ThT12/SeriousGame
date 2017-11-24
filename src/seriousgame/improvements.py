@@ -4,7 +4,7 @@ from seriousgame.effect import Effects
 
 class Improvement(object):
 
-    def __init__(self, title='My improvement', influence_cost=1, effects=None, requirements=None, status=False,
+    def __init__(self, title='My improvement', influence_cost=1, effects=Effects(), requirements=None, status=False,
                  description='Detail of this improvement'):
         """ Constructor
 
@@ -17,8 +17,6 @@ class Improvement(object):
             status (bool): True if this improvement have been done
             description (str): Detail of this improvement
         """
-        if not effects:
-            effects = Effects()
         if not requirements:
             requirements = ()
         self.title = title

@@ -2,6 +2,7 @@ import pytest
 
 from seriousgame.country import Country
 from seriousgame.effect import EffectDescriptor
+from seriousgame.effect import Effects
 from seriousgame.event import Event
 
 country = Country()
@@ -26,3 +27,11 @@ def test_is_event_possible_false(mocker):
     assert not event.is_event_possible(country)
     event = Event(condition_type=EffectDescriptor.ECONOMY, condition_direction='sup', condition_value=0.6)
     assert not event.is_event_possible(country)
+
+
+def test_get_effect(mocker):
+    mocker.patch.object(Effects, 'get_current_effects', return_value={})
+    event = Event()
+    effect = event.get_effects()
+    assert Effects.get_current_effects.call_count == 1
+    assert effect == {}

@@ -1,8 +1,31 @@
 import pytest
 
 from seriousgame.country import Country, verify_level_value
+from seriousgame import country as ct
 from seriousgame.effect import EffectDescriptor
 from seriousgame.io import outputs
+
+
+def test_setattr(mocker):
+    country = Country()
+    mocker.patch.object(ct, 'verify_level_value', return_value=None)
+    country.name = 'test'
+    country.social = 0.1
+    country.ecology = 0.1
+    country.economy = 0.1
+    assert ct.verify_level_value.call_count == 3
+
+
+def test_getattr():
+    economy = 0.2
+    ecology = 0.3
+    social = 0.4
+    name = 'Name'
+    country = Country(name=name, init_economy=economy, init_ecology=ecology, init_social=social)
+    assert country.__getattr__(EffectDescriptor.SOCIAL) == social
+    assert country.__getattr__(EffectDescriptor.ECOLOGY) == ecology
+    assert country.__getattr__(EffectDescriptor.ECONOMY) == economy
+    assert country.__getattr__('name') == name
 
 
 def test_new_turn_no_min():

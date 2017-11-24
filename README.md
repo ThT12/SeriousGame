@@ -5,6 +5,8 @@
 * packaging
 * add random event
 * display of an improvement tree
+* display improvements detail
+* help function
 
 # TODO data
 * construct all improvements

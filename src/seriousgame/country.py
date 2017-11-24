@@ -24,6 +24,16 @@ class Country(object):
             verify_level_value(value)
         super(Country, self).__setattr__(name, value)
 
+    def __getattr__(self, item):
+        if item == EffectDescriptor.ECONOMY:
+            return self.economy
+        elif item == EffectDescriptor.ECOLOGY:
+            return self.ecology
+        elif item == EffectDescriptor.SOCIAL:
+            return self.social
+        else:
+            return super(Country, self).__getattribute__(item)
+
     def new_turn(self, effects=None):
         """ make a country moved to the next turn
 

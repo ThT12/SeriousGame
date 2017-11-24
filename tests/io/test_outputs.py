@@ -3,6 +3,7 @@ from io import StringIO
 
 from seriousgame.effect import Effect
 from seriousgame.effect import Effects
+from seriousgame.event import Event
 from seriousgame.improvements import Improvement
 from seriousgame.improvements import Improvements
 from seriousgame.io import outputs
@@ -135,3 +136,18 @@ def test_display_introduction(mocker):
     outputs.display_context_part_one()
     outputs.display_context_part_two()
     assert len(sys.stdout.getvalue()) > 0
+
+
+def test_display_event(mocker):
+    name = 'Name'
+    description = 'Description'
+    effects = 'Effects'
+    mocker.patch('sys.stdout', new_callable=StringIO)
+    mocker.patch.object(outputs, 'effects_to_str', return_value=effects)
+    event = Event(name=name, description=description, effects=Effects())
+    outputs.display_event(event)
+    out = sys.stdout.getvalue()
+    assert out.find(name) != -1
+    assert out.find(description) != -1
+    assert out.find(effects) != -1
+

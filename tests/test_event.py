@@ -8,6 +8,7 @@ from seriousgame.effect import EffectDescriptor
 from seriousgame.effect import Effects
 from seriousgame.event import Event
 from seriousgame.event import Events
+from seriousgame.io import outputs
 
 country = Country()
 
@@ -19,17 +20,19 @@ def test_init_error():
 
 def test_is_event_possible_true(mocker):
     mocker.patch.object(Country, '__getattr__', return_value=0.5)
-    event = Event(condition_type=EffectDescriptor.ECONOMY, condition_direction='inf', condition_value=0.6)
+    event = Event(condition_type=EffectDescriptor.SOCIAL, condition_direction='inf', condition_value=0.6, is_done=False)
     assert event.is_event_possible(country)
-    event = Event(condition_type=EffectDescriptor.ECONOMY, condition_direction='sup', condition_value=0.4)
+    event = Event(condition_type=EffectDescriptor.SOCIAL, condition_direction='sup', condition_value=0.4, is_done=False)
     assert event.is_event_possible(country)
 
 
 def test_is_event_possible_false(mocker):
     mocker.patch.object(Country, '__getattr__', return_value=0.5)
-    event = Event(condition_type=EffectDescriptor.ECONOMY, condition_direction='inf', condition_value=0.4)
+    event = Event(condition_type=EffectDescriptor.SOCIAL, condition_direction='inf', condition_value=0.4, is_done=False)
     assert not event.is_event_possible(country)
-    event = Event(condition_type=EffectDescriptor.ECONOMY, condition_direction='sup', condition_value=0.6)
+    event = Event(condition_type=EffectDescriptor.SOCIAL, condition_direction='sup', condition_value=0.6, is_done=False)
+    assert not event.is_event_possible(country)
+    event = Event(condition_type=EffectDescriptor.SOCIAL, condition_direction='inf', condition_value=0.6, is_done=True)
     assert not event.is_event_possible(country)
 
 
@@ -54,10 +57,12 @@ def test_event_effect_with_event(mocker):
     mocker.patch.object(Events, 'get_event_possible', return_value=[Event(), Event()])
     mocker.patch.object(random, 'choice', return_value=Event())
     mocker.patch.object(Effects, 'get_current_effects', return_value=effect_dict)
+    mocker.patch.object(outputs, 'display_event', return_value=None)
     events = Events()
     effect = events.get_event_effect(country)
     assert effect == effect_dict
     assert random.choice.call_count == 1
+    assert outputs.display_event.call_count == 1
 
 
 def test_event_effect_event_not_occurs(mocker):

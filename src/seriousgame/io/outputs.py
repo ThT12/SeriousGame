@@ -127,3 +127,10 @@ def display_context_part_two():
           'construct a better world. \nYou will have to influence wisely the people in your country to choose the right'
           ' direction.')
     input('Press enter to continue ...\n')
+
+
+def display_event(event):
+    """ Display an event that occurs"""
+    print(' '.join(['An unexpected event has happen:', event.name]))
+    print(event.description)
+    print(' '.join(['This event will impact your country:', effects_to_str(event.effects)]))

@@ -1,4 +1,4 @@
-from seriousgame import improvements
+from seriousgame import effect
 from seriousgame.improvements import Improvements
 
 
@@ -22,7 +22,7 @@ class ProgressionTree(object):
         """
         effects = {}
         for improvements_obj in self.tree:
-            effects = improvements.merge_effects(effects, improvements_obj.get_current_effects())
+            effects = effect.merge_effects(effects, improvements_obj.get_current_effects())
         return effects
 
     def get_improvements_available(self):

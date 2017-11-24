@@ -1,3 +1,5 @@
+from seriousgame import effect as ef
+from seriousgame.effect import Effects
 
 
 class Improvement(object):
@@ -9,14 +11,14 @@ class Improvement(object):
         Args:
             title (str): improvement title
             influence_cost (int): influence cost to make this improvement
-            effects (list): list of effects
+            effects (Effects): list of effects
             requirements (:type: tuple of Improvement): tuple of Improvements that have to been done to have this one
                 available
             status (bool): True if this improvement have been done
             description (str): Detail of this improvement
         """
         if not effects:
-            effects = []
+            effects = Effects()
         if not requirements:
             requirements = ()
         self.title = title
@@ -54,15 +56,11 @@ class Improvement(object):
             (dict): return all effects currently applied. If two improvement have the same EffectDescriptor then their
                 values are summed
         """
-        effects = {}
-        for effect in self.effects:
-            effects = merge_effects(effects, effect.get_current_effect())
-        return effects
+        return self.effects.get_current_effects()
 
     def new_turn(self):
         """ Apply a new turn on all effects """
-        for effect in self.effects:
-            effect.new_turn()
+        self.effects.new_turn()
 
 
 class Improvements(object):
@@ -127,29 +125,10 @@ class Improvements(object):
         """
         effects = {}
         for improvement in self.get_improvements_done():
-            effects = merge_effects(effects, improvement.get_current_effects())
+            effects = ef.merge_effects(effects, improvement.get_current_effects())
         return effects
 
     def new_turn(self):
         """ Apply a new turn on all Improvement """
         for improvement in self.improvements:
             improvement.new_turn()
-
-
-def merge_effects(effects1, effects2):
-    """ merge two dictionary. If two improvement have the same type of effects then their values are summed
-
-    Args:
-        effects1 (dict): first dictionary to merge
-        effects2 (dict): second dictionary to merge
-
-    Returns:
-        (dict): merged dictionaries
-    """
-    effects = effects1
-    for key in effects2.keys():
-        if key in effects:
-            effects[key] += effects2[key]
-        else:
-            effects.update({key: effects2[key]})
-    return effects

@@ -1,13 +1,15 @@
 import pytest
 
-from seriousgame import improvements
-from seriousgame.effect import Effect, EffectDescriptor
+from seriousgame import effect
+from seriousgame.effect import Effect
+from seriousgame.effect import EffectDescriptor
+from seriousgame.effect import Effects
 from seriousgame.improvements import Improvement, Improvements
 
 effect_one = Effect(effect_descriptor=EffectDescriptor.INFLUENCE, value=1)
 effect_two = Effect(effect_descriptor=EffectDescriptor.INFLUENCE, value=4)
 effect_tree = Effect(effect_descriptor=EffectDescriptor.ECOLOGY, value=-0.01)
-improvement = Improvement(effects=[effect_one, effect_two, effect_tree])
+improvement = Improvement(effects=Effects([effect_one, effect_two, effect_tree]))
 
 
 def test_improvement_comparator():
@@ -36,18 +38,16 @@ def test_develop_improvement_ok():
 
 def test_improvement_get_current_effect(mocker):
     value = {EffectDescriptor.INFLUENCE: 3}
-    mocker.patch.object(improvements, 'merge_effects', return_value=value)
-    mocker.patch.object(Effect, 'get_current_effect', return_value=None)
+    mocker.patch.object(Effects, 'get_current_effects', return_value=value)
     effects = improvement.get_current_effects()
-    assert improvements.merge_effects.call_count == len(improvement.effects)
-    assert Effect.get_current_effect.call_count == len(improvement.effects)
+    assert Effects.get_current_effects.call_count == 1
     assert effects == value
 
 
 def test_improvement_new_turn(mocker):
-    mocker.patch.object(Effect, 'new_turn', return_value=None)
+    mocker.patch.object(Effects, 'new_turn', return_value=None)
     improvement.new_turn()
-    assert Effect.new_turn.call_count == len(improvement.effects)
+    assert Effects.new_turn.call_count == 1
 
 
 improvement_done = Improvement(title='Done', effects=[effect_one], status=True)
@@ -93,10 +93,10 @@ def test_get_improvements_available():
 
 def test_improvements_get_current_effects(mocker):
     value = {EffectDescriptor.INFLUENCE: 3}
-    mocker.patch.object(improvements, 'merge_effects', return_value=value)
+    mocker.patch.object(effect, 'merge_effects', return_value=value)
     mocker.patch.object(Improvement, 'get_current_effects', return_value=None)
     effects = improvements_obj.get_current_effects()
-    assert improvements.merge_effects.call_count == len(improvements_obj.get_improvements_done())
+    assert effect.merge_effects.call_count == len(improvements_obj.get_improvements_done())
     assert Improvement.get_current_effects.call_count == len(improvements_obj.get_improvements_done())
     assert effects == value
 
@@ -105,10 +105,3 @@ def test_improvements_new_turn(mocker):
     mocker.patch.object(Improvement, 'new_turn', return_value=None)
     improvements_obj.new_turn()
     assert Improvement.new_turn.call_count == len(improvements_obj.improvements)
-
-
-def test_merge_effects():
-    dict1 = {EffectDescriptor.INFLUENCE: 3, EffectDescriptor.ECOLOGY: -0.01}
-    dict2 = {EffectDescriptor.INFLUENCE: -1, EffectDescriptor.ECONOMY: 0.01}
-    effects = improvements.merge_effects(dict1, dict2)
-    assert effects == {EffectDescriptor.INFLUENCE: 2, EffectDescriptor.ECOLOGY: -0.01, EffectDescriptor.ECONOMY: 0.01}

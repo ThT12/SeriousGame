@@ -107,12 +107,12 @@ def effects_to_str(effects):
     """ construct a string with effects
 
     Args:
-        effects (list): list of effect
+        effects (Effects): list of effect
 
     Returns:
         (str): all effect in a string
     """
-    return ' - '.join([str(effect) for effect in effects])
+    return ' - '.join([str(effect) for effect in effects.effects])
 
 
 def display_context_part_one():

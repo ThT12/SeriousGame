@@ -1,4 +1,7 @@
 from seriousgame.country import Country
+from seriousgame.effect import EffectDescriptor
+from seriousgame import effect as ef
+from seriousgame.event import Events
 from seriousgame.game import Game
 from seriousgame.improvements import Improvement
 from seriousgame.io import inputs
@@ -10,20 +13,24 @@ game = Game()
 
 
 def test_new_turn(mocker):
-    effects = {'Influence': 4}
-    mocker.patch.object(ProgressionTree, 'get_current_effects', return_value=effects)
+    effects_one = {EffectDescriptor.INFLUENCE: 4}
+    effects_two = {EffectDescriptor.ECOLOGY: 2}
+    mocker.patch.object(ProgressionTree, 'get_current_effects', return_value=effects_one)
     mocker.patch.object(Player, 'new_turn', return_value=None)
     mocker.patch.object(Country, 'new_turn', return_value=None)
     mocker.patch.object(Country, 'display', return_value=None)
     mocker.patch.object(Game, 'let_player_play', return_value=None)
     mocker.patch.object(ProgressionTree, 'new_turn', return_value=None)
+    mocker.patch.object(Events, 'get_event_effect', return_value=effects_two)
     game.new_turn()
+    effects = ef.merge_effects(effects_one, effects_two)
     assert Player.new_turn.call_count == 1
     assert Player.new_turn.call_args[0] == (effects,)
     assert Game.let_player_play.call_count == 1
     assert Country.display.call_count == 1
     assert Country.new_turn.call_count == 1
     assert Country.new_turn.call_args[0] == (effects,)
+    assert Events.get_event_effect.call_count == 1
     assert ProgressionTree.new_turn.call_count == 1
 
 

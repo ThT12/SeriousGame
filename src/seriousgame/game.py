@@ -1,4 +1,6 @@
 from seriousgame.country import Country
+from seriousgame.effect import merge_effects
+from seriousgame.event import Events
 from seriousgame.improvements import Improvement
 from seriousgame.io import inputs
 from seriousgame.io import outputs
@@ -8,25 +10,29 @@ from seriousgame.tree import ProgressionTree
 
 class Game(object):
 
-    def __init__(self, player=Player(), country=Country(), tree=ProgressionTree()):
+    def __init__(self, player=Player(), country=Country(), tree=ProgressionTree(), events=Events()):
         """ Constructor
 
         Args:
             player (Player): player information
             country (Country): country information
             tree (ProgressionTree): Tree that contain improvement available for this game
+            events (Events): Events possible in this game
         """
         self.player = player
         self.country = country
         self.tree = tree
+        self.events = events
 
     def new_turn(self):
         """ Makes a new turn in the game"""
         self.country.display()
         self.let_player_play()
         current_effect = self.tree.get_current_effects()
-        self.country.new_turn(current_effect)
-        self.player.new_turn(current_effect)
+        event_effect = self.events.get_event_effect(self.country)
+        effects = merge_effects(current_effect, event_effect)
+        self.country.new_turn(effects)
+        self.player.new_turn(effects)
         self.tree.new_turn()
 
     def play(self):

@@ -84,7 +84,7 @@ def merge_effects(effects1, effects2):
     Returns:
         (dict): merged dictionaries
     """
-    effects = effects1
+    effects = effects1.copy()
     for key in effects2.keys():
         if key in effects:
             effects[key] += effects2[key]

@@ -1,4 +1,8 @@
+import random
+
 from seriousgame.effect import Effects
+
+PROBABILITY = 0.05
 
 
 class Event(object):
@@ -46,3 +50,48 @@ class Event(object):
             (dict): return event effect
         """
         return self.effects.get_current_effects()
+
+
+class Events(object):
+
+    def __init__(self, events=None):
+        """ Constructor
+
+        Args:
+            events (list): list of Event
+        """
+        self.events = [] if events is None else events
+
+    def get_event_possible(self, country):
+        """ get the list of effect that can happen this turn
+
+        Args:
+            country (Country): Country in which an event can occurs
+
+        Returns:
+            (list): list of effect that can happen this turn
+        """
+        return [event for event in self.events if event.is_event_possible(country)]
+
+    def get_event_effect(self, country):
+        """ determine if an event occurs an return an possible event effect
+        Args:
+            country (Country): Country in which an event can occurs
+
+        Returns:
+            (dict): return an event effect if an event occurs
+        """
+        event_possible = self.get_event_possible(country)
+        if len(event_possible) != 0 and is_event_occurs():
+            # TODO: Add display event
+            return random.choice(event_possible).get_effects()
+        else:
+            return {}
+
+
+def is_event_occurs():
+    """
+    Returns:
+        (bool): True if an event occurs
+    """
+    return True if random.random() < PROBABILITY else False

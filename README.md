@@ -3,7 +3,7 @@
 * improvement as number
 * display improvement done
 * packaging
-* add random event
+* add random event display
 * display of an improvement tree
 * display improvements detail
 * help function

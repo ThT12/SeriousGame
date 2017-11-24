@@ -1,10 +1,9 @@
-from io import StringIO
 import sys
+from io import StringIO
 
-from seriousgame.io import inputs
 from seriousgame.improvements import Improvement
+from seriousgame.io import inputs
 from seriousgame.player import Player
-
 
 player = Player(influence=10)
 improvement_one = Improvement(title='My First improvement', influence_cost=1)

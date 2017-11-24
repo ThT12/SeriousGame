@@ -1,7 +1,7 @@
 import pytest
 
-from seriousgame.player import Player
 from seriousgame.effect import EffectDescriptor
+from seriousgame.player import Player
 
 player = Player()
 

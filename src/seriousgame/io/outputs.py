@@ -1,4 +1,3 @@
-import time
 
 
 def display_improvement(improvement, influence_available=None, suffix=''):
@@ -128,5 +127,3 @@ def display_context_part_two():
           'construct a better world. \nYou will have to influence wisely the people in your country to choose the right'
           ' direction.')
     input('Press enter to continue ...\n')
-
-

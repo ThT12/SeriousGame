@@ -4,7 +4,8 @@ from seriousgame import effect
 from seriousgame.effect import Effect
 from seriousgame.effect import EffectDescriptor
 from seriousgame.effect import Effects
-from seriousgame.improvements import Improvement, Improvements
+from seriousgame.improvements import Improvement
+from seriousgame.improvements import Improvements
 
 effect_one = Effect(effect_descriptor=EffectDescriptor.INFLUENCE, value=1)
 effect_two = Effect(effect_descriptor=EffectDescriptor.INFLUENCE, value=4)
@@ -60,8 +61,8 @@ improvement_not_in_improvements = Improvement(title='Not in improvements')
 improvement_with_requirement_not_in_improvements = Improvement(title='Requirement not in improvements', requirements=(
     improvement_done, improvement_not_in_improvements))
 
-improvements_obj = Improvements('Farming', (improvement_done, another_improvement_done, improvement_available,
-                                            improvement_not_available))
+improvements = Improvements('Farming', (improvement_done, another_improvement_done, improvement_available,
+                                        improvement_not_available))
 
 
 def test_constructor_return_error_if_requirement_not_on_improvements():
@@ -72,36 +73,36 @@ def test_constructor_return_error_if_requirement_not_on_improvements():
 
 def test_are_requirements_reached_return_error_if_not_in_list():
     with pytest.raises(KeyError):
-        improvements_obj.are_improvement_requirements_reached(improvement_not_in_improvements)
+        improvements.are_improvement_requirements_reached(improvement_not_in_improvements)
 
 
 def test_are_requirements_reached_when_there_are():
-    assert improvements_obj.are_improvement_requirements_reached(improvement_available)
+    assert improvements.are_improvement_requirements_reached(improvement_available)
 
 
 def test_are_requirements_reached_when_there_are_not():
-    assert not improvements_obj.are_improvement_requirements_reached(improvement_not_available)
+    assert not improvements.are_improvement_requirements_reached(improvement_not_available)
 
 
 def test_get_improvements_done():
-    assert improvements_obj.get_improvements_done() == [improvement_done, another_improvement_done]
+    assert improvements.get_improvements_done() == [improvement_done, another_improvement_done]
 
 
 def test_get_improvements_available():
-    assert improvements_obj.get_improvements_available() == [improvement_available]
+    assert improvements.get_improvements_available() == [improvement_available]
 
 
 def test_improvements_get_current_effects(mocker):
     value = {EffectDescriptor.INFLUENCE: 3}
     mocker.patch.object(effect, 'merge_effects', return_value=value)
     mocker.patch.object(Improvement, 'get_current_effects', return_value=None)
-    effects = improvements_obj.get_current_effects()
-    assert effect.merge_effects.call_count == len(improvements_obj.get_improvements_done())
-    assert Improvement.get_current_effects.call_count == len(improvements_obj.get_improvements_done())
+    effects = improvements.get_current_effects()
+    assert effect.merge_effects.call_count == len(improvements.get_improvements_done())
+    assert Improvement.get_current_effects.call_count == len(improvements.get_improvements_done())
     assert effects == value
 
 
 def test_improvements_new_turn(mocker):
     mocker.patch.object(Improvement, 'new_turn', return_value=None)
-    improvements_obj.new_turn()
-    assert Improvement.new_turn.call_count == len(improvements_obj.improvements)
+    improvements.new_turn()
+    assert Improvement.new_turn.call_count == len(improvements.improvements)

@@ -1,7 +1,7 @@
 from seriousgame import effect as ef
 from seriousgame.effect import Effect
-from seriousgame.effect import Effects
 from seriousgame.effect import EffectDescriptor
+from seriousgame.effect import Effects
 
 
 def test_constructor_effect():

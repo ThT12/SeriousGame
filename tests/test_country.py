@@ -1,7 +1,8 @@
 import pytest
 
-from seriousgame.country import Country, verify_level_value
 from seriousgame import country as ct
+from seriousgame.country import Country
+from seriousgame.country import verify_level_value
 from seriousgame.effect import EffectDescriptor
 from seriousgame.io import outputs
 

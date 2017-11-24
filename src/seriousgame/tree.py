@@ -10,9 +10,7 @@ class ProgressionTree(object):
         Args:
             tree (tuple): tuple of Improvements
         """
-        if tree is None:
-            tree = (Improvements(name='Name1'), Improvements(name='Name2'))
-        self.tree = tree
+        self.tree = (Improvements(name='Name1'), Improvements(name='Name2')) if tree is None else tree
 
     def get_current_effects(self):
         """

@@ -23,7 +23,6 @@ class Effect(object):
         if effect_descriptor == EffectDescriptor.LOBBYING:
             start_effect = 0
             end_effect = 1
-
         self.turn_since_done = 0
         self.effect_descriptor = effect_descriptor
         self.value = value

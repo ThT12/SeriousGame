@@ -1,4 +1,4 @@
-from seriousgame import effect as ef
+from seriousgame import effect
 from seriousgame.effect import Effects
 
 
@@ -17,12 +17,10 @@ class Improvement(object):
             status (bool): True if this improvement have been done
             description (str): Detail of this improvement
         """
-        if not requirements:
-            requirements = ()
         self.title = title
         self.influence_cost = influence_cost
         self.effects = effects
-        self.requirements = requirements
+        self.requirements = {} if requirements is None else requirements
         self.status = status
         self.description = description
 
@@ -123,7 +121,7 @@ class Improvements(object):
         """
         effects = {}
         for improvement in self.get_improvements_done():
-            effects = ef.merge_effects(effects, improvement.get_current_effects())
+            effects = effect.merge_effects(effects, improvement.get_current_effects())
         return effects
 
     def new_turn(self):

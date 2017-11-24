@@ -1,9 +1,9 @@
 from seriousgame.country import Country
 from seriousgame.improvements import Improvement
-from seriousgame.tree import ProgressionTree
 from seriousgame.io import inputs
 from seriousgame.io import outputs
 from seriousgame.player import Player
+from seriousgame.tree import ProgressionTree
 
 
 class Game(object):

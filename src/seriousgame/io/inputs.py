@@ -36,5 +36,3 @@ def ask_player_name_and_country():
     country_name = input('Now can you give me your country name please?\n')
     print(' '.join(['Thanks. So you are living in', country_name, '. Good to know!']))
     return [player_name, country_name]
-
-

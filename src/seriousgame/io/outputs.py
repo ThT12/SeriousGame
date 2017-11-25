@@ -109,13 +109,15 @@ def display_influence_available(player):
     print(''.join(['You have ', str(influence_to_display), ' influence point(s) available']))
 
 
-def display_country_header(name):
+def display_country_header(name, year):
     """ Display the country name
 
     Args:
         name (str): Country name
+        year (int): Country year
     """
-    print(''.join(['The current situation in ', name, ' is the following:']))
+    print(''.join(['We are now in ', str(year), '.']))
+    print(' '.join(['The current situation in', name, 'is the following:']))
 
 
 def display_country_level(name, level):

@@ -5,22 +5,24 @@ from seriousgame.io import outputs
 class Country(object):
     INITIAL_REDUCTION = 0.01
 
-    def __init__(self, name='France', init_ecology=0.5, init_social=0.5, init_economy=0.5):
+    def __init__(self, name='France', year=2018, init_ecology=0.5, init_social=0.5, init_economy=0.5):
         """ Constructor
         
         Args:
-            name (str): country name 
+            name (str): country name
+            year (int): Current year
             init_ecology (float): initial ecology level
             init_social (float): initial social level
             init_economy (float): initial economy level
         """
         self.name = name
+        self.year = year
         self.ecology = init_ecology
         self.social = init_social
         self.economy = init_economy
 
     def __setattr__(self, name, value):
-        if name != 'name':
+        if name != 'name' and name != 'year':
             verify_level_value(value)
         super(Country, self).__setattr__(name, value)
 
@@ -53,6 +55,7 @@ class Country(object):
         self.ecology = min(max(self.ecology - Country.INITIAL_REDUCTION + bonus_ecology, 0), 1)
         self.economy = min(max(self.economy - Country.INITIAL_REDUCTION + bonus_economy, 0), 1)
         self.social = min(max(self.social - Country.INITIAL_REDUCTION + bonus_social, 0), 1)
+        self.year += 1
 
     def is_win(self):
         """ Verifies if the country match the winning condition
@@ -72,7 +75,7 @@ class Country(object):
 
     def display(self):
         """ Display a country """
-        outputs.display_country_header(self.name)
+        outputs.display_country_header(self.name, self.year)
         outputs.display_country_level('Ecology', self.ecology)
         outputs.display_country_level('Economy', self.economy)
         outputs.display_country_level('Social ', self.social)

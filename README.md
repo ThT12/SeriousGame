@@ -1,9 +1,8 @@
 # TODO dev: 
 1. display of an improvement tree
-2. explicit next turn
-3. help function
-4. packaging
-5. tutorial
+2. help function
+3. packaging
+4. tutorial
 
 # TODO data
 * construct all improvements

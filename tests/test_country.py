@@ -22,20 +22,23 @@ def test_getattr():
     ecology = 0.3
     social = 0.4
     name = 'Name'
-    country = Country(name=name, init_economy=economy, init_ecology=ecology, init_social=social)
+    year = 2017
+    country = Country(name=name, year=year, init_economy=economy, init_ecology=ecology, init_social=social)
     assert country.__getattr__(EffectDescriptor.SOCIAL) == social
     assert country.__getattr__(EffectDescriptor.ECOLOGY) == ecology
     assert country.__getattr__(EffectDescriptor.ECONOMY) == economy
     assert country.__getattr__('name') == name
+    assert country.__getattr__('year') == year
 
 
 def test_new_turn_no_min():
     init_value = 0.5
-    country = Country(init_ecology=init_value, init_economy=init_value, init_social=init_value)
+    country = Country(init_ecology=init_value, init_economy=init_value, init_social=init_value, year=0)
     country.new_turn()
     assert country.ecology == init_value - country.INITIAL_REDUCTION
     assert country.economy == init_value - country.INITIAL_REDUCTION
     assert country.social == init_value - country.INITIAL_REDUCTION
+    assert country.year == 1
 
 
 def test_new_turn_with_min():

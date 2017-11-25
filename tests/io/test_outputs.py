@@ -125,8 +125,11 @@ def test_display_influence_available_lower_than_zero(mocker):
 def test_display_country_header(mocker):
     mocker.patch('sys.stdout', new_callable=StringIO)
     name = 'Name'
-    outputs.display_country_header(name)
-    assert sys.stdout.getvalue().find(name) != -1
+    year = 2017
+    outputs.display_country_header(name, year)
+    output = sys.stdout.getvalue()
+    assert output.find(name) != -1
+    assert output.find(str(year)) != -1
 
 
 def test_display_country_level(mocker):

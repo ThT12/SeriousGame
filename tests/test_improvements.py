@@ -17,12 +17,15 @@ def test_improvement_comparator():
     improvement_one = Improvement(title='One')
     improvement_one_bis = Improvement(title='One')
     improvement_two = Improvement(title='Two')
+    improvement_one.number = 1
     assert improvement_one == 'One'
     assert improvement_one == improvement_one_bis
     assert improvement_one != 'Two'
     assert improvement_one != improvement_two
+    assert improvement_one == 1
+    assert improvement_one != 2
     with pytest.raises(KeyError):
-        improvement_one.__eq__(2)
+        improvement_one.__eq__([2, 3])
 
 
 def test_develop_improvement_already_done():
@@ -106,3 +109,13 @@ def test_improvements_new_turn(mocker):
     mocker.patch.object(Improvement, 'new_turn', return_value=None)
     improvements.new_turn()
     assert Improvement.new_turn.call_count == len(improvements.improvements)
+
+
+def test_set_improvement_numbers(mocker):
+    improvements_available = [improvements.improvements[0], improvements.improvements[2]]
+    mocker.patch.object(Improvements, 'get_improvements_available', return_value=improvements_available)
+    number_init = 2
+    number_final = improvements.set_improvement_numbers(number_init)
+    numbers = [imp.number for imp in improvements.improvements]
+    assert number_final == number_init + len(improvements.get_improvements_available())
+    assert numbers == [number_init, 0, number_final-1, 0]

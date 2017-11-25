@@ -23,6 +23,7 @@ class Improvement(object):
         self.requirements = {} if requirements is None else requirements
         self.status = status
         self.description = description
+        self.number = 0
 
     def __eq__(self, other):
         """ Compare if two Improvement are equal to each other.
@@ -36,6 +37,8 @@ class Improvement(object):
         """
         if isinstance(other, str):
             return other == self.title
+        if isinstance(other, int):
+            return other == self.number
         if isinstance(other, Improvement):
             return other.title == self.title
         raise KeyError('An Improvement can only be compared to a str or an other Improvement')
@@ -128,3 +131,9 @@ class Improvements(object):
         """ Apply a new turn on all Improvement """
         for improvement in self.improvements:
             improvement.new_turn()
+
+    def set_improvement_numbers(self, number):
+        for improvement in self.get_improvements_available():
+            improvement.number = number
+            number += 1
+        return number

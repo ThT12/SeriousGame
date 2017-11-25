@@ -30,3 +30,9 @@ def test_new_turn(mocker):
     mocker.patch.object(Improvements, 'new_turn', return_value= None)
     tree.new_turn()
     assert Improvements.new_turn.call_count == len(tree.tree)
+
+
+def test_set_improvement_numbers(mocker):
+    mocker.spy(Improvements, 'set_improvement_numbers')
+    tree.set_improvement_numbers()
+    assert Improvements.set_improvement_numbers.call_count == len(tree.tree)

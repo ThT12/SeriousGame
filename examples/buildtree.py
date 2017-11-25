@@ -10,7 +10,7 @@ def build_tree():
     effect_three = Effect(effect_descriptor=EffectDescriptor.ECONOMY, value=0.1)
     effect_four = Effect(effect_descriptor=EffectDescriptor.SOCIAL, value=0.1)
 
-    farming = Improvements('Farming', (Improvement(title='1', effects=Effects([effect_one])),
+    farming = Improvements('Farming', (Improvement(title='My Title', effects=Effects([effect_one])),
                                        Improvement(title='2', effects=Effects([effect_two, effect_three,
                                                                                effect_four]))))
     education = Improvements('Education', (Improvement(title='3', effects=Effects([effect_one])),

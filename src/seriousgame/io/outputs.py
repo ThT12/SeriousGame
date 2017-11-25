@@ -1,6 +1,6 @@
 
 
-def display_improvement(improvement, influence_available=None, suffix=''):
+def display_improvement(improvement, influence_available=None):
     """ display in a python console the improvement. Influence_cost display in red if influence_available <
         influence_cost, in green if influence_available >= influence_cost and without color if influence_available is
         None
@@ -8,7 +8,6 @@ def display_improvement(improvement, influence_available=None, suffix=''):
     Args:
         improvement (Improvement): improvement to display
         influence_available (int): influence available to compare with to set the influence_cost color
-        suffix (str): text to add before improvement is displayed
     """
     if influence_available is not None:
         if influence_available < improvement.influence_cost:
@@ -19,8 +18,8 @@ def display_improvement(improvement, influence_available=None, suffix=''):
     else:
         color = ''
         end_color = ''
-    string_to_print = ''.join([suffix, improvement.title, ': Cost=', color, str(improvement.influence_cost), end_color,
-                               ' ; Description=', improvement.description, ' ; Effects=',
+    string_to_print = ''.join([str(improvement.number), ') ', improvement.title, ': Cost=', color,
+                               str(improvement.influence_cost), end_color, ' ; Effects=',
                                effects_to_str(improvement.effects)])
     print(string_to_print)
 
@@ -36,7 +35,7 @@ def display_improvements(improvements, influence_available=None):
         print('No improvement available.')
     else:
         for improvement in improvements:
-            display_improvement(improvement, influence_available, suffix='* ')
+            display_improvement(improvement, influence_available)
 
 
 def display_improvements_available(improvements, influence_available=None):

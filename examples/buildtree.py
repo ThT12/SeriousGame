@@ -11,17 +11,17 @@ def build_tree():
     effect_four = Effect(effect_descriptor=EffectDescriptor.SOCIAL, value=0.1)
 
     farming = Improvements('Farming', (Improvement(title='My Title', effects=Effects([effect_one])),
-                                       Improvement(title='2', effects=Effects([effect_two, effect_three,
+                                       Improvement(title='a', effects=Effects([effect_two, effect_three,
                                                                                effect_four]))))
-    education = Improvements('Education', (Improvement(title='3', effects=Effects([effect_one])),
-                                           Improvement(title='4', effects=Effects([effect_two, effect_three,
+    education = Improvements('Education', (Improvement(title='b', effects=Effects([effect_one])),
+                                           Improvement(title='c', effects=Effects([effect_two, effect_three,
                                                                                    effect_four]))))
-    energy = Improvements('Energy', (Improvement(title='5', effects=Effects([effect_one])),
-                                     Improvement(title='6', effects=Effects([effect_two, effect_three, effect_four]))))
-    politic = Improvements('Politic', (Improvement(title='7', effects=Effects([effect_one])),
-                                       Improvement(title='8', effects=Effects([effect_two, effect_three,
+    energy = Improvements('Energy', (Improvement(title='d', effects=Effects([effect_one])),
+                                     Improvement(title='e', effects=Effects([effect_two, effect_three, effect_four]))))
+    politic = Improvements('Politic', (Improvement(title='f', effects=Effects([effect_one])),
+                                       Improvement(title='g', effects=Effects([effect_two, effect_three,
                                                                                effect_four]))))
-    economy = Improvements('Economy', (Improvement(title='9', effects=Effects([effect_one])),
-                                       Improvement(title='10', effects=Effects([effect_two, effect_three,
-                                                                                effect_four]))))
+    economy = Improvements('Economy', (Improvement(title='h', effects=Effects([effect_one])),
+                                       Improvement(title='i', effects=Effects([effect_two, effect_three,
+                                                                               effect_four]))))
     return ProgressionTree((farming, education, energy, politic, economy))

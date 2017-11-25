@@ -5,7 +5,7 @@ from seriousgame.effect import Effects
 class Improvement(object):
 
     def __init__(self, title='My improvement', influence_cost=1, effects=Effects(), requirements=None, status=False,
-                 description='Detail of this improvement'):
+                 description='Detail of this improvement', number=0):
         """ Constructor
 
         Args:
@@ -16,6 +16,7 @@ class Improvement(object):
                 available
             status (bool): True if this improvement have been done
             description (str): Detail of this improvement
+            number (int): improvement number
         """
         self.title = title
         self.influence_cost = influence_cost
@@ -23,20 +24,23 @@ class Improvement(object):
         self.requirements = {} if requirements is None else requirements
         self.status = status
         self.description = description
-        self.number = 0
+        self.number = number
 
     def __eq__(self, other):
         """ Compare if two Improvement are equal to each other.
 
         Args:
-            other (object): object to be compared with. Return an error if other is not a str or a Improvement
+            other (object): object to be compared with. Return an error if other is not a str, a int or an Improvement
 
         Returns:
             (bool): return True if other is an Improvement and other.title = self.title or if other is a str and
-                other = self.title
+                other = self.title or if other is a int (or a digit in str) and other = self.number
         """
         if isinstance(other, str):
-            return other == self.title
+            if other.isdigit():
+                return int(other) == self.number
+            else:
+                return other == self.title
         if isinstance(other, int):
             return other == self.number
         if isinstance(other, Improvement):
@@ -133,6 +137,14 @@ class Improvements(object):
             improvement.new_turn()
 
     def set_improvement_numbers(self, number):
+        """ Defines a number for each Improvement that can be made
+
+        Args:
+            number (int): starting number to set in Improvement
+
+        Returns:
+            (int): return the next number available
+        """
         for improvement in self.get_improvements_available():
             improvement.number = number
             number += 1

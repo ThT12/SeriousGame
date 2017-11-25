@@ -10,8 +10,8 @@ from seriousgame.io import outputs
 from seriousgame.player import Player
 from seriousgame.tree import ProgressionTree
 
-improvement_green = Improvement(title='My First improvement', influence_cost=1, description='My First description')
-improvement_red = Improvement(title='My Second improvement', influence_cost=9, description='My Second description')
+improvement_green = Improvement(title='My First improvement', influence_cost=5, number=2)
+improvement_red = Improvement(title='My Second improvement', influence_cost=9, number=4)
 list_improvements = [improvement_green, improvement_red]
 
 
@@ -20,8 +20,8 @@ def test_display_improvement_green(mocker):
     outputs.display_improvement(improvement_green, 5)
     output = sys.stdout.getvalue()
     assert output.find('First improvement') != -1
-    assert output.find('1') != -1
-    assert output.find('First description') != -1
+    assert output.find('5') != -1
+    assert output.find('2') != -1
     assert output.find('\033[92m') != -1
 
 
@@ -31,7 +31,7 @@ def test_display_improvement_red(mocker):
     output = sys.stdout.getvalue()
     assert output.find('Second improvement') != -1
     assert output.find('9') != -1
-    assert output.find('Second description') != -1
+    assert output.find('4') != -1
     assert output.find('\033[91m') != -1
 
 
@@ -41,7 +41,7 @@ def test_display_improvement_no_color(mocker):
     output = sys.stdout.getvalue()
     assert output.find('Second improvement') != -1
     assert output.find('9') != -1
-    assert output.find('Second description') != -1
+    assert output.find('4') != -1
     assert output.find('\033') == -1
 
 

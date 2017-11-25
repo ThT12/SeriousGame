@@ -22,6 +22,7 @@ def test_new_turn(mocker):
     mocker.patch.object(Game, 'let_player_play', return_value=None)
     mocker.patch.object(ProgressionTree, 'new_turn', return_value=None)
     mocker.patch.object(Events, 'get_event_effect', return_value=effects_two)
+    mocker.patch.object(ProgressionTree, 'set_improvement_numbers', return_value=None)
     game.new_turn()
     effects = ef.merge_effects(effects_one, effects_two)
     assert Player.new_turn.call_count == 1
@@ -32,6 +33,7 @@ def test_new_turn(mocker):
     assert Country.new_turn.call_args[0] == (effects,)
     assert Events.get_event_effect.call_count == 1
     assert ProgressionTree.new_turn.call_count == 1
+    assert ProgressionTree.set_improvement_numbers.call_count == 1
 
 
 def test_play_win(mocker):

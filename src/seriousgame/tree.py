@@ -37,6 +37,7 @@ class ProgressionTree(object):
             improvements.new_turn()
 
     def set_improvement_numbers(self):
+        """ Defines a number for each improvement that can be made """
         number = 1
         for improvements in self.tree:
             number = improvements.set_improvement_numbers(number)

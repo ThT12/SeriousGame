@@ -25,7 +25,8 @@ class Game(object):
         self.events = events
 
     def new_turn(self):
-        """ Makes a new turn in the game"""
+        """ Makes a new turn in the game """
+        self.tree.set_improvement_numbers()
         self.country.display()
         self.let_player_play()
         current_effect = self.tree.get_current_effects()
@@ -36,7 +37,7 @@ class Game(object):
         self.tree.new_turn()
 
     def play(self):
-        """ Launch the game until it is finish"""
+        """ Launch the game until it is finish """
         self.game_introduction()
         while not self.country.is_win() and not self.country.is_lost():
             self.new_turn()
@@ -47,7 +48,7 @@ class Game(object):
             outputs.display_lost()
 
     def let_player_play(self):
-        """ Let the player do all improvement he want/can"""
+        """ Let the player do all improvement he want/can """
         improvement = Improvement()
         while improvement is not None:
             outputs.display_influence_available(self.player)
@@ -62,6 +63,7 @@ class Game(object):
                 improvement = None
 
     def game_introduction(self):
+        """ Make the game introduction: ask player name and country and display context """
         outputs.display_context_part_one()
         [player_name, country_name] = inputs.ask_player_name_and_country()
         self.player.name = player_name

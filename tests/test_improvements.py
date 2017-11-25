@@ -23,7 +23,9 @@ def test_improvement_comparator():
     assert improvement_one != 'Two'
     assert improvement_one != improvement_two
     assert improvement_one == 1
+    assert improvement_one == '1'
     assert improvement_one != 2
+    assert improvement_one != '2'
     with pytest.raises(KeyError):
         improvement_one.__eq__([2, 3])
 

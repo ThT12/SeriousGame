@@ -31,6 +31,7 @@ def ask_improvements_to_make(improvements, player):
 
 
 def ask_player_name_and_country():
+    """ Ask the player name and country name """
     player_name = input('First, can you give me your name please?\n')
     print(' '.join(['Hello', player_name, 'and thanks!']))
     country_name = input('Now can you give me your country name please?\n')

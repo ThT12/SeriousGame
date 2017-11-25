@@ -3,3 +3,6 @@
 .cache/
 __pycache__/
 .coverage
+build/
+dist/
+src/SeriousGame.egg-info/

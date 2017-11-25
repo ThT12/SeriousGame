@@ -24,6 +24,19 @@ def display_improvement(improvement, influence_available=None):
     print(string_to_print)
 
 
+def display_improvement_details(improvement):
+    """ Display in detail an improvement
+
+    Args:
+        improvement (Improvement): improvement to display
+    """
+    print(''.join([improvement.title, ':']))
+    print('-'*(len(improvement.title)+1))
+    print(improvement.description)
+    print(' '.join(['Influence cost:', str(improvement.influence_cost), 'influence(s)']))
+    print(' '.join(['Effects:', effects_to_str(improvement.effects)]))
+
+
 def display_improvements(improvements, influence_available=None):
     """ Calls display_improvement for each improvement in improvements
 

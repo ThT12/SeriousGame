@@ -1,3 +1,4 @@
+from seriousgame.io import outputs
 
 
 def ask_improvements_to_make(improvements, player):
@@ -12,7 +13,9 @@ def ask_improvements_to_make(improvements, player):
     """
     valid_input = False
     improvement = None
-    print('Which improvement do you want to do? (type "done" if you do not want to do a new improvement)')
+    print('Which improvement do you want to do? Type the improvement number or title to do it \n'
+          '  Type "done" if you do not want to do a new improvement.\n'
+          '  Type "Detail" + improvement number or title to have the details of an improvement')
     while not valid_input:
         user_choice = input()
         if user_choice == 'done':
@@ -25,6 +28,12 @@ def ask_improvements_to_make(improvements, player):
                 else:
                     improvement = None
                     print('You do not have enough influence to make this improvement. Try again.')
+            elif len(user_choice) > 7 and user_choice[0:6] == 'Detail':
+                user_choice = user_choice[7:]
+                if user_choice in improvements:
+                    outputs.display_improvement_details(improvements[improvements.index(user_choice)])
+                else:
+                    print('I did not understand you. Please try again.')
             else:
                 print('I did not understand you. Please try again.')
     return improvement

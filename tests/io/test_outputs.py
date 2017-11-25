@@ -10,7 +10,7 @@ from seriousgame.io import outputs
 from seriousgame.player import Player
 from seriousgame.tree import ProgressionTree
 
-improvement_green = Improvement(title='My First improvement', influence_cost=5, number=2)
+improvement_green = Improvement(title='My First improvement', influence_cost=5, number=2, description='Description')
 improvement_red = Improvement(title='My Second improvement', influence_cost=9, number=4)
 list_improvements = [improvement_green, improvement_red]
 
@@ -43,6 +43,18 @@ def test_display_improvement_no_color(mocker):
     assert output.find('9') != -1
     assert output.find('4') != -1
     assert output.find('\033') == -1
+
+
+def test_display_improvement_details(mocker):
+    mocker.patch('sys.stdout', new_callable=StringIO)
+    mocker.patch.object(outputs, 'effects_to_str', return_value='My effects')
+    outputs.display_improvement_details(improvement_green)
+    output = sys.stdout.getvalue()
+    assert output.find('First improvement') != -1
+    assert output.find('Description') != -1
+    assert output.find('5') != -1
+    assert output.find('2') == -1
+    assert output.find('My effects') != -1
 
 
 def test_display_improvements_with_improvement(mocker):

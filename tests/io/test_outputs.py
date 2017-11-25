@@ -184,3 +184,8 @@ def test_display_event(mocker):
     assert out.find(description) != -1
     assert out.find(effects) != -1
 
+
+def test_display_help(mocker):
+    mocker.patch('sys.stdout', new_callable=StringIO)
+    outputs.display_help()
+    assert len(sys.stdout.getvalue()) > 0

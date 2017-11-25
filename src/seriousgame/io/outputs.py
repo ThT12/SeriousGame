@@ -170,7 +170,16 @@ def display_context_part_two():
 
 
 def display_event(event):
-    """ Display an event that occurs"""
+    """ Display an event that occurs """
     print(' '.join(['An unexpected event has happen:', event.name]))
     print(event.description)
     print(' '.join(['This event will impact your country:', effects_to_str(event.effects)]))
+
+
+def display_help():
+    """ Display help """
+    print('  Type the improvement number or title to do develop it. \n'
+          '  Type "done" if you do not want to do a new improvement.\n'
+          '  Type "Detail" + improvement number or title to have the details of an improvement.\n'
+          '  Type "Improvement done" to see the improvement already developed.\n'
+          '  Type "help" to get this help again.')

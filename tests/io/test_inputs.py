@@ -60,6 +60,15 @@ def test_ask_improvements_to_make_when_improvement_done_asked(mocker):
     assert outputs.display_tree_done.call_count == 1
 
 
+def test_ask_improvements_to_make_when_help_asked(mocker):
+    mocker.patch('sys.stdout', new_callable=StringIO)
+    mocker.patch('builtins.input', side_effect=['help', 'done'])
+    mocker.spy(outputs, 'display_help')
+    out = inputs.ask_improvements_to_make(list_improvements, player, tree)
+    assert out is None
+    assert outputs.display_help.call_count == 2
+
+
 def test_ask_player_name_and_country(mocker):
     name = 'Name'
     country = 'Country'

@@ -14,10 +14,8 @@ def ask_improvements_to_make(improvements, player, tree):
     """
     valid_input = False
     improvement = None
-    print('Which improvement do you want to do? Type the improvement number or title to do it \n'
-          '  Type "done" if you do not want to do a new improvement.\n'
-          '  Type "Detail" + improvement number or title to have the details of an improvement.\n'
-          '  Type "Improvement done" to see the improvement already developed.')
+    print('Which improvement do you want to do?')
+    outputs.display_help()
     while not valid_input:
         user_choice = input()
         if user_choice == 'done':
@@ -38,6 +36,8 @@ def ask_improvements_to_make(improvements, player, tree):
                     print('I did not understand you. Please try again.')
             elif user_choice == 'Improvement done':
                 outputs.display_tree_done(tree)
+            elif user_choice == 'help':
+                outputs.display_help()
             else:
                 print('I did not understand you. Please try again.')
     return improvement

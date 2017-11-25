@@ -1,6 +1,3 @@
-from seriousgame.game import Game
-from examples.buildtree import build_tree
+from seriousgame.game import play
 
-
-game = Game(tree=build_tree())
-game.play()
+play()

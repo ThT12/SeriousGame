@@ -1,6 +1,8 @@
-from seriousgame.effect import Effect, EffectDescriptor
+from seriousgame.effect import Effect
+from seriousgame.effect import EffectDescriptor
 from seriousgame.effect import Effects
-from seriousgame.improvements import Improvement, Improvements
+from seriousgame.improvements import Improvement
+from seriousgame.improvements import Improvements
 from seriousgame.tree import ProgressionTree
 
 

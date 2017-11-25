@@ -1,6 +1,7 @@
+from seriousgame import effect as ef
+from seriousgame import game as gm
 from seriousgame.country import Country
 from seriousgame.effect import EffectDescriptor
-from seriousgame import effect as ef
 from seriousgame.event import Events
 from seriousgame.game import Game
 from seriousgame.improvements import Improvement
@@ -105,4 +106,11 @@ def test_game_introduction(mocker):
     game.game_introduction()
     assert game.player.name == name
     assert game.country.name == country
+
+
+def test_play(mocker):
+    mocker.patch.object(Game, 'play', return_value=None)
+    gm.play()
+    assert Game.play.call_count == 1
+
 

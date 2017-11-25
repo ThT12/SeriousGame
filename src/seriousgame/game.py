@@ -1,4 +1,5 @@
 from seriousgame.country import Country
+from seriousgame.data.buildtree import build_tree
 from seriousgame.effect import merge_effects
 from seriousgame.event import Events
 from seriousgame.improvements import Improvement
@@ -69,3 +70,8 @@ class Game(object):
         self.player.name = player_name
         self.country.name = country_name
         outputs.display_context_part_two()
+
+
+def play():
+    game = Game(tree=build_tree())
+    game.play()

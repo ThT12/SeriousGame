@@ -1,12 +1,13 @@
 from seriousgame.io import outputs
 
 
-def ask_improvements_to_make(improvements, player):
+def ask_improvements_to_make(improvements, player, tree):
     """ ask to the player which improvement he want to do.
 
     Args:
         improvements (list): list of improvement in which the player can choose
         player (Player): player who want to do this improvement
+        tree (ProgressionTree): progress tree
 
     Returns:
         (Improvement): return the improvement choice. Return None if the player typed done
@@ -15,7 +16,8 @@ def ask_improvements_to_make(improvements, player):
     improvement = None
     print('Which improvement do you want to do? Type the improvement number or title to do it \n'
           '  Type "done" if you do not want to do a new improvement.\n'
-          '  Type "Detail" + improvement number or title to have the details of an improvement')
+          '  Type "Detail" + improvement number or title to have the details of an improvement.\n'
+          '  Type "Improvement done" to see the improvement already developed.')
     while not valid_input:
         user_choice = input()
         if user_choice == 'done':
@@ -34,6 +36,8 @@ def ask_improvements_to_make(improvements, player):
                     outputs.display_improvement_details(improvements[improvements.index(user_choice)])
                 else:
                     print('I did not understand you. Please try again.')
+            elif user_choice == 'Improvement done':
+                outputs.display_tree_done(tree)
             else:
                 print('I did not understand you. Please try again.')
     return improvement

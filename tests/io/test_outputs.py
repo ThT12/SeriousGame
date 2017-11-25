@@ -15,9 +15,9 @@ improvement_red = Improvement(title='My Second improvement', influence_cost=9, n
 list_improvements = [improvement_green, improvement_red]
 
 
-def test_display_improvement_green(mocker):
+def test_display_improvement_green_with_number(mocker):
     mocker.patch('sys.stdout', new_callable=StringIO)
-    outputs.display_improvement(improvement_green, 5)
+    outputs.display_improvement(improvement_green, 5, is_number_displayed=True)
     output = sys.stdout.getvalue()
     assert output.find('First improvement') != -1
     assert output.find('5') != -1
@@ -25,13 +25,13 @@ def test_display_improvement_green(mocker):
     assert output.find('\033[92m') != -1
 
 
-def test_display_improvement_red(mocker):
+def test_display_improvement_red_without_number(mocker):
     mocker.patch('sys.stdout', new_callable=StringIO)
-    outputs.display_improvement(improvement_red, 5)
+    outputs.display_improvement(improvement_red, 5,  is_number_displayed=False)
     output = sys.stdout.getvalue()
     assert output.find('Second improvement') != -1
     assert output.find('9') != -1
-    assert output.find('4') != -1
+    assert output.find('4') == -1
     assert output.find('\033[91m') != -1
 
 
@@ -41,7 +41,6 @@ def test_display_improvement_no_color(mocker):
     output = sys.stdout.getvalue()
     assert output.find('Second improvement') != -1
     assert output.find('9') != -1
-    assert output.find('4') != -1
     assert output.find('\033') == -1
 
 
@@ -81,6 +80,18 @@ def test_display_improvements_available(mocker):
     outputs.display_improvements_available(improvements)
     assert sys.stdout.getvalue().find(improvements_name) != -1
     assert outputs.display_improvements.call_args[0] == (improvements.get_improvements_available(), None)
+    assert outputs.display_improvements.call_args[1] == {'is_number_displayed': True}
+
+
+def test_display_improvements_done(mocker):
+    mocker.patch('sys.stdout', new_callable=StringIO)
+    mocker.patch.object(outputs, 'display_improvements', return_value=None)
+    improvements_name = 'Farming'
+    improvements = Improvements(improvements_name, tuple(list_improvements))
+    outputs.display_improvements_done(improvements)
+    assert sys.stdout.getvalue().find(improvements_name) != -1
+    assert outputs.display_improvements.call_args[0] == (improvements.get_improvements_done(),)
+    assert outputs.display_improvements.call_args[1] == {'is_number_displayed': False}
 
 
 def test_display_tree_available(mocker):
@@ -88,6 +99,13 @@ def test_display_tree_available(mocker):
     tree = ProgressionTree()
     outputs.display_tree_available(tree)
     assert outputs.display_improvements_available.call_count == len(tree.tree)
+
+
+def test_display_tree_done(mocker):
+    mocker.patch.object(outputs, 'display_improvements_done', return_value=None)
+    tree = ProgressionTree()
+    outputs.display_tree_done(tree)
+    assert outputs.display_improvements_done.call_count == len(tree.tree)
 
 
 def test_display_influence_available_upper_than_zero(mocker):

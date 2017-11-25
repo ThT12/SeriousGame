@@ -1,6 +1,6 @@
 
 
-def display_improvement(improvement, influence_available=None):
+def display_improvement(improvement, influence_available=None, is_number_displayed=True):
     """ display in a python console the improvement. Influence_cost display in red if influence_available <
         influence_cost, in green if influence_available >= influence_cost and without color if influence_available is
         None
@@ -8,6 +8,7 @@ def display_improvement(improvement, influence_available=None):
     Args:
         improvement (Improvement): improvement to display
         influence_available (int): influence available to compare with to set the influence_cost color
+        is_number_displayed (bool): indicate if the improvements number are displayed or not
     """
     if influence_available is not None:
         if influence_available < improvement.influence_cost:
@@ -18,7 +19,11 @@ def display_improvement(improvement, influence_available=None):
     else:
         color = ''
         end_color = ''
-    string_to_print = ''.join([str(improvement.number), ') ', improvement.title, ': Cost=', color,
+    if is_number_displayed:
+        start = ''.join([str(improvement.number), ') '])
+    else:
+        start = '- '
+    string_to_print = ''.join([start, improvement.title, ': Cost=', color,
                                str(improvement.influence_cost), end_color, ' ; Effects=',
                                effects_to_str(improvement.effects)])
     print(string_to_print)
@@ -37,18 +42,19 @@ def display_improvement_details(improvement):
     print(' '.join(['Effects:', effects_to_str(improvement.effects)]))
 
 
-def display_improvements(improvements, influence_available=None):
+def display_improvements(improvements, influence_available=None, is_number_displayed=True):
     """ Calls display_improvement for each improvement in improvements
 
     Args:
         improvements (list): list of improvement
         influence_available (int): influence available to compare with to set the influence_cost color
+        is_number_displayed (bool): indicate if the improvements number are displayed or not
     """
     if len(improvements) == 0:
         print('No improvement available.')
     else:
         for improvement in improvements:
-            display_improvement(improvement, influence_available)
+            display_improvement(improvement, influence_available, is_number_displayed)
 
 
 def display_improvements_available(improvements, influence_available=None):
@@ -59,7 +65,17 @@ def display_improvements_available(improvements, influence_available=None):
         influence_available (int): influence available to compare with to set the influence_cost color
     """
     print(' '.join(['Improvements available in', improvements.name, 'area:']))
-    display_improvements(improvements.get_improvements_available(), influence_available)
+    display_improvements(improvements.get_improvements_available(), influence_available, is_number_displayed=True)
+
+
+def display_improvements_done(improvements):
+    """ Display all improvements available for improvements
+
+    Args:
+        improvements (Improvements): improvements to display
+    """
+    print(' '.join(['Improvements already done in', improvements.name, 'area:']))
+    display_improvements(improvements.get_improvements_done(), is_number_displayed=False)
 
 
 def display_tree_available(tree, influence_available=None):
@@ -71,6 +87,16 @@ def display_tree_available(tree, influence_available=None):
     """
     for improvements in tree.tree:
         display_improvements_available(improvements, influence_available)
+
+
+def display_tree_done(tree):
+    """ Display all improvements done in the tree
+
+    Args:
+        tree (Tree): tree to display
+    """
+    for improvements in tree.tree:
+        display_improvements_done(improvements)
 
 
 def display_influence_available(player):

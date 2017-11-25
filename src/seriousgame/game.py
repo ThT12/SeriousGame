@@ -55,7 +55,7 @@ class Game(object):
             outputs.display_tree_available(self.tree, self.player.influence)
             improvement_available = self.tree.get_improvements_available()
             if len(improvement_available) != 0:
-                improvement = inputs.ask_improvements_to_make(improvement_available, self.player)
+                improvement = inputs.ask_improvements_to_make(improvement_available, self.player, self.tree)
                 if improvement is not None:
                     improvement.develop()
                     self.player.use_influence(improvement.influence_cost)
